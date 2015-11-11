@@ -1,7 +1,8 @@
-db.define_table('user',
+db.define_table('person',
                 Field('name'),
                 Field('city'),
                 Field('email'),
-                Field,('password'),
+                Field('password'),
                 Field('age'),
-                Field('gender'))
+                Field('gender')
+                )

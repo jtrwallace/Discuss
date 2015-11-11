@@ -53,3 +53,14 @@ CREATE TABLE auth_cas(
     renew CHAR(1)
 );
 success!
+timestamp: 2015-11-11T01:20:11.366000
+CREATE TABLE person(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    city CHAR(512),
+    email CHAR(512),
+    password CHAR(512),
+    age CHAR(512),
+    gender CHAR(512)
+);
+success!
