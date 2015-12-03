@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="{{=URL('static', 'font-awesome-4.4.0/css/font-awesome.min.css')}}"/>
     <link rel="shortcut icon" href="{{=URL('static','images/favicon.ico')}}" type="image/x-icon">
     <link rel="apple-touch-icon" href="{{=URL('static','images/favicon.png')}}">
-    <!-- All JavaScript at the bottom, except for Modernizr which enables
+	<link href='https://fonts.googleapis.com/css?family=Lato:400,300,100,700,900,100italic,300italic,400italic,700italic,900italic|Open+Sans:400,300,600,700,800,300italic,400italic,600italic,700italic,800italic|Montserrat' rel='stylesheet' type='text/css'>    <!-- All JavaScript at the bottom, except for Modernizr which enables
          HTML5 elements & feature detects -->
     <script src="{{=URL('static','js/modernizr-2.8.3.min.js')}}"></script>
     <!--[if lt IE 9]>
@@ -37,23 +37,44 @@
     {{include 'web2py_ajax.html'}} <!-- this includes jquery.js, calendar.js/.css and web2py.js -->
 </head>
 <body>
-	<div id="index_target"></div>
+	<div id="index-target"></div>
 	<!-- The javascript =============================== -->
     <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
     <script src="{{=URL('static','js/web2py-bootstrap3.js')}}"></script>
     <script src="{{=URL('static', 'js/ractive.min.js')}}"></script>
 </body>
 
-<script id="index_template" type="text/ractive">
-	<h1>Testing</h1>
+<script id="index-template" type="text/ractive">
+	<nav id="index-nav" class="flex-row space-between full-width center-aligned">
+		<div class="title">Discuss</div>
+		<div class="nav-buttons flex-row space-around">
+		{{if not auth.is_logged_in():}}
+			{{=A('Get Started', _class='btn', _id='signup-button', _href=URL('default', 'user', args=['register'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
+            {{=A('Sign In', _class='btn', _id='signin-button', _href=URL('default', 'user', args=['login'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
+        {{pass}}
+        {{if auth.is_logged_in():}}
+            {{=A('My Profile', _class='btn', _id='myprofile-button', _href=URL('default', 'user', args=['login'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
+            {{=A('Sign Out', _class='btn', _id='signout-button', _href=URL('default', 'user', args=['register'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
+        {{pass}}
+        </div>
+	</nav>
+	<main>
+		<div class="banner-photo">
+			<img src="http://becgreen.ca/wp-content/uploads/2015/11/o-BIKE-CITY-facebook.jpg" alt="Bicycle Commuter">
+			<div id="index-greeting" class="banner-content">
+				<div class="index-hello">Hello, Derp</div>
+				<div class="banner-text">Your friends are already here, you just haven't met them yet.</div>
+			</div>
+		</div>
+	</main>
 </script>
 
 <script>
 	$(function() {
 		// Ractive object
 		var BODY = new Ractive({
-			el: '#index_target',
-			template: '#index_template',
+			el: '#index-target',
+			template: '#index-template',
 			delimiters: ['{%', '%}'],
 			tripleDelimiters: ['{%%', '%%}'],
 			data: {
