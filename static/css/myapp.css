@@ -23,9 +23,12 @@ nav {
 /* line 20, ../sass/_main.scss */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Lato', sans-serif;
+  color: white;
+  margin: 0px;
+  padding: 0px;
 }
 
-/* line 25, ../sass/_main.scss */
+/* line 27, ../sass/_main.scss */
 .flex-column {
   display: -webkit-flex;
   display: flex;
@@ -33,7 +36,7 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
 }
 
-/* line 32, ../sass/_main.scss */
+/* line 34, ../sass/_main.scss */
 .flex-row {
   display: -webkit-flex;
   display: flex;
@@ -41,27 +44,33 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: row;
 }
 
-/* line 39, ../sass/_main.scss */
+/* line 41, ../sass/_main.scss */
+.flex-wrap {
+  -webkit-flex-wrap: wrap;
+}
+
+/* line 45, ../sass/_main.scss */
 .space-between {
   justify-content: space-between;
 }
 
-/* line 43, ../sass/_main.scss */
+/* line 49, ../sass/_main.scss */
 .space-around {
   justify-content: space-around;
 }
 
-/* line 47, ../sass/_main.scss */
+/* line 53, ../sass/_main.scss */
 .full-width {
   width: 100%;
 }
 
-/* line 51, ../sass/_main.scss */
+/* line 57, ../sass/_main.scss */
 .center-aligned {
   align-items: center;
+  -webkit-align-items: center;
 }
 
-/* line 55, ../sass/_main.scss */
+/* line 62, ../sass/_main.scss */
 .btn {
   border: none;
   background-color: #424242;
@@ -73,26 +82,128 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0px;
 }
 
-/* line 66, ../sass/_main.scss */
+/* line 73, ../sass/_main.scss */
 .btn:hover {
-  color: #FF9400;
+  color: #0097FF;
 }
 
-/* line 75, ../sass/_main.scss */
+/* line 82, ../sass/_main.scss */
 #signin-button {
   background-color: #0097FF;
 }
 
-/* line 79, ../sass/_main.scss */
+/* line 86, ../sass/_main.scss */
+#signin-button:hover {
+  color: #424242;
+}
+
+/* line 90, ../sass/_main.scss */
 .banner-photo {
   width: 100%;
   height: 450px;
   overflow: hidden;
+  color: white;
+  font-size: 23pt;
 }
 
-/* line 85, ../sass/_main.scss */
+/* line 98, ../sass/_main.scss */
 .banner-photo img {
   width: 100%;
   margin-top: -85px;
   -webkit-filter: brightness(0.5);
+  position: relative;
+}
+
+/* line 105, ../sass/_main.scss */
+.brightness-fifty {
+  -webkit-filter: brightness(0.5);
+}
+
+/* line 109, ../sass/_main.scss */
+.banner-content {
+  position: absolute;
+  top: 150px;
+  left: 15%;
+  width: 30%;
+  font-family: 'Montserrat', sans-serif;
+  text-shadow: 2px 2px 6px #000;
+}
+
+/* line 118, ../sass/_main.scss */
+#index-hello {
+  font-size: 36pt;
+  margin-bottom: 15px;
+}
+
+/* line 123, ../sass/_main.scss */
+#search-container {
+  width: 60%;
+  height: 100px;
+  background-color: #424242;
+  margin: auto;
+  padding-left: 25px;
+  padding-right: 25px;
+  position: relative;
+  top: -50px;
+}
+
+/* line 134, ../sass/_main.scss */
+.search-input {
+  width: 80%;
+  height: 50px;
+  font-size: 16pt;
+  font-weight: 200;
+  font-style: italic;
+  padding-left: 15px;
+}
+
+/* line 143, ../sass/_main.scss */
+#search-button {
+  background-color: #FF9400;
+  height: 50px;
+  width: 18%;
+}
+
+/* line 149, ../sass/_main.scss */
+#search-button:hover {
+  color: #424242;
+}
+
+/* line 153, ../sass/_main.scss */
+#discussions-container {
+  padding: 0px 15% 0px 15%;
+}
+
+/* line 157, ../sass/_main.scss */
+.discussion-thumb {
+  height: 190px;
+  width: 280px;
+  position: relative;
+  margin: 10px;
+}
+
+/* line 164, ../sass/_main.scss */
+.discussion-thumb img {
+  -webkit-filter: brightness(0.5);
+  width: 100%;
+  overflow: hidden;
+}
+
+/* line 170, ../sass/_main.scss */
+.discussion-thumb h2 {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  text-align: center;
+  top: 38%;
+  font-size: 30pt;
+  text-shadow: 2px 2px 6px #000;
+}
+
+/* line 181, ../sass/_main.scss */
+.discussion-thumb h2:hover {
+  font-size: 35pt;
+  top: 36%;
+  color: #FF9400;
 }
