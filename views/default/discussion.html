@@ -37,15 +37,15 @@
     {{include 'web2py_ajax.html'}} <!-- this includes jquery.js, calendar.js/.css and web2py.js -->
 </head>
 <body>
-	<div id="index-target"></div>
+	<div id="discussion-target"></div>
 	<!-- The javascript =============================== -->
     <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
     <script src="{{=URL('static','js/web2py-bootstrap3.js')}}"></script>
     <script src="{{=URL('static', 'js/ractive.min.js')}}"></script>
 </body>
 
-<script id="index-template" type="text/ractive">
-	<nav id="index-nav" class="flex-row space-between full-width center-aligned">
+<script id="discussion-template" type="text/ractive">
+	<nav id="discussion-nav" class="flex-row space-between full-width center-aligned">
 		{{=A('Discuss', _class='title', _href=URL('default', 'index'))}}
 		<div class="nav-buttons flex-row space-around">
 		{{if not auth.is_logged_in():}}
@@ -61,54 +61,14 @@
 	<main>
 		<div class="banner-photo">
 			<img src="http://becgreen.ca/wp-content/uploads/2015/11/o-BIKE-CITY-facebook.jpg" alt="Bicycle Commuter">
-			<div id="index-greeting" class="banner-content">
-				{{if auth.is_logged_in():}}
-				<div id="index-hello">Hello, {{=auth.user.first_name}}</div>
-				{{pass}}
-				{{if not auth.is_logged_in():}}
-				<div id="index-hello">Hello</div>
-				{{pass}}
+			<div id="discussion-greeting" class="banner-content">
 				<div class="banner-text">Your friends are already here, you just haven't met them yet.</div>
 			</div>
 		</div>
-		<div id="search-new-container" class="flex-row space-around center-aligned">
-			<div id="search-container" class="flex-row space-between center-aligned">
-				<input type="text" class="search-input" id="search-input-index" name="search-input"  placeholder="All Discussions" maxlength="30"/>
-				<button class="btn" id="search-button" on-click="search-button">Search</button>
-			</div>
-			<div id="new-discussion-container" class="flex-column space-around center-aligned">
-				{{=A('Discuss Something New', _class='btn', _id='new-discussion-button', _href=URL('default', 'discussion'))}}
-			</div>
-		</div>
-		<div id="discussions-container" class="flex-row center-aligned flex-wrap space-between">
-			<div class="discussion-thumb">
-				<img src="http://ryersongcm.ca/sites/default/files/_FAJ1679_0.jpg" alt="Bicycle Commuter">
-				<h2>Macs</h2>
-			</div>
-			<div class="discussion-thumb">
-				<img src="http://ryersongcm.ca/sites/default/files/_FAJ1679_0.jpg" alt="Bicycle Commuter">
-				<h2>Macs</h2>
-			</div>
-			<div class="discussion-thumb">
-				<img src="http://ryersongcm.ca/sites/default/files/_FAJ1679_0.jpg" alt="Bicycle Commuter">
-				<h2>Macs</h2>
-			</div>
-			<div class="discussion-thumb">
-				<img src="http://ryersongcm.ca/sites/default/files/_FAJ1679_0.jpg" alt="Bicycle Commuter">
-				<h2>Macs</h2>
-			</div>
-			<div class="discussion-thumb">
-				<img src="http://ryersongcm.ca/sites/default/files/_FAJ1679_0.jpg" alt="Bicycle Commuter">
-				<h2>Macs</h2>
-			</div>
-			<div class="discussion-thumb">
-				<img src="http://ryersongcm.ca/sites/default/files/_FAJ1679_0.jpg" alt="Bicycle Commuter">
-				<h2>Macs</h2>
-			</div>
-			<div class="discussion-thumb">
-				<img src="http://ryersongcm.ca/sites/default/files/_FAJ1679_0.jpg" alt="Bicycle Commuter">
-				<h2>Macs</h2>
-			</div>
+		<div id="discussion-nav-container" class="flex-row space-around center-aligned">
+			<button class="btn discussion-btn" id="discuss-button" on-click="discuss-button">Discuss</button>
+			<button class="btn discussion-btn" id="calendar-button" on-click="calendar-button">Calendar</button>
+			<button class="btn discussion-btn" id="members-button" on-click="members-button">Members</button>
 		</div>
 	</main>
 </script>
@@ -117,16 +77,14 @@
 	$(function() {
 		// Ractive object
 		var BODY = new Ractive({
-			el: '#index-target',
-			template: '#index-template',
+			el: '#discussion-target',
+			template: '#discussion-template',
 			delimiters: ['{%', '%}'],
 			tripleDelimiters: ['{%%', '%%}'],
 			data: {
 				//posts_list: [],
 			}
 		});
-
-
 	});
 </script>
 

@@ -57,6 +57,11 @@ auth = Auth(db)
 service = Service()
 plugins = PluginManager()
 
+##Extra fields for Auth table for Discuss
+auth.settings.extra_fields['auth_user'] = [
+    Field('city', 'string', label='City', length=50),
+    Field('age', 'integer', label='Age', length=3)]
+
 ## create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
 

@@ -17,8 +17,13 @@ nav {
   letter-spacing: 2px;
 }
 
+.title:hover {
+  text-decoration: none;
+  color: white;
+}
+
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: white;
   margin: 0px;
   padding: 0px;
@@ -70,6 +75,17 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0px;
 }
 
+.btn-primary {
+  border: none;
+  background-color: #424242;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15pt;
+  padding: 10px;
+  border-radius: 0px;
+  margin: 0px;
+}
+
 .btn:hover {
   color: #0097FF;
   //-webkit-text-stroke-width: 0.01em;
@@ -84,6 +100,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #signin-button:hover {
+  color: #424242;
+}
+
+#myprofile-button {
+}
+
+#signout-button {
+  background-color: red;
+}
+
+#signout-button:hover {
   color: #424242;
 }
 
@@ -108,11 +135,21 @@ h1, h2, h3, h4, h5, h6 {
 
 .banner-content {
   position: absolute;
+  font-family: 'Montserrat', sans-serif;
+  text-shadow: 2px 2px 6px #000;
+}
+
+#index-greeting {
   top: 150px;
   left: 15%;
   width: 30%;
-  font-family: 'Montserrat', sans-serif;
-  text-shadow: 2px 2px 6px #000;
+}
+
+#discussion-greeting {
+  top: 150px;
+  left: 40%;
+  width: 50%;
+  text-align: center;
 }
 
 #index-hello {
@@ -120,15 +157,20 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 15px;
 }
 
+#search-new-container {
+  position: relative;
+  top: -50px;
+  width: 70%;
+  margin: auto;
+}
+
 #search-container {
-  width: 60%;
+  width: 85%;
   height: 100px;
   background-color: #424242;
   margin: auto;
   padding-left: 25px;
   padding-right: 25px;
-  position: relative;
-  top: -50px;
 }
 
 .search-input {
@@ -147,6 +189,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #search-button:hover {
+  color: #424242;
+}
+
+#new-discussion-container {
+  width: 15%;
+}
+
+#new-discussion-button {
+  height: 100px;
+  width: 100%;
+  background-color: #0097FF;
+  font-size: 16pt;
+  white-space: pre-line;
+  text-align: center;
+  line-height: 120%;
+}
+
+#new-discussion-button:hover {
+  background-color: #FF9400;
   color: #424242;
 }
 
@@ -182,4 +243,93 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 35pt;
   top: 36%;
   color: #FF9400;
+}
+
+#login-greeting h1 {
+  text-align: center;
+  color: white;
+  font-size: 36pt;
+  margin-top: 20px;
+}
+
+#signin-form-container {
+  background-color: #424242;
+  margin: 25px auto 15px auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 35%;
+}
+
+.form-column {
+  width: 100%;
+  margin: auto;
+  padding: 15px;
+}
+
+.form-column form {
+  width: 85%;
+  margin: auto;
+}
+
+.form-row {
+  margin: 10px;
+  align-items: flex-start;
+}
+
+.form-row h4 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  color: #F7F7F7;
+  margin-bottom: 4px;
+}
+
+.custom-form {
+  width: 100%;
+}
+
+#signup-form-button {
+  margin: auto;
+  text-align: center;
+}
+
+#signup-form-button input {
+  border: none;
+  background-image: none;
+  background-repeat: none;
+  text-shadow: none;
+  box-shadow: none;
+  background-color: #0097FF;
+}
+
+#signup-form-button input:hover {
+  color: #424242;
+}
+
+#discussion-nav-container {
+  position: relative;
+  top: -50px;
+  width: 80%;
+  margin: auto;
+  background-color: #424242;
+  height: 100px;
+}
+
+.discussion-btn {
+  background-color: #FF9400;
+  width: 25%;
+}
+
+.discussion-btn:hover {
+  background-color: #0097FF;
+  color: white;
+}
+
+.discussion-active-btn {
+  background-color: #0097FF;
+  color: white;
+}
+
+.discussion-active-btn:hover {
+  background-color: #0097FF;
+  color: white;
 }

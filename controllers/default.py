@@ -11,6 +11,11 @@
 def index():
     return dict()
 
+def create_discussion():
+    return dict()
+
+def discussion():
+    return dict()
 
 def user():
     """
