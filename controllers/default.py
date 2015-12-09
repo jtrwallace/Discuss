@@ -11,8 +11,12 @@
 def index():
     return dict()
 
-def create_discussion():
-    return dict()
+def newdiscussion():
+    form=SQLFORM(db.discussions)
+    if form.process().accepted:
+        db.discussions.discussion_name.represent = lambda discussion_name,row: discussion_name.capitalize()
+        redirect(URL('default', 'index'))
+    return dict(form=form)
 
 def discussion():
     return dict()

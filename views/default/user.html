@@ -37,6 +37,8 @@
     {{include 'web2py_ajax.html'}} <!-- this includes jquery.js, calendar.js/.css and web2py.js -->
 </head>
 <body>
+<div id="wrap">
+<div class="content-wrapper">
 	<nav id="index-nav" class="flex-row space-between full-width center-aligned">
 		{{=A('Discuss', _class='title', _href=URL('default', 'index'))}}
 		<div class="nav-buttons flex-row space-around">
@@ -51,8 +53,8 @@
         </div>
 	</nav>
 	<main>
-		<div id="signin-form-container" class="flex-column center-aligned">
-			<div id="login-greeting">
+		<div id="signin-form-container" class="flex-column center-aligned form-container">
+			<div id="login-greeting" class="form-greeting">
 				<h1>{{=T('Your Details') if request.args(0) == 'register' else T('Sign In') if request.args(0) == 'login' else T(request.args(0).replace('_',' ').title())}}</h1>
 			</div>
 			<div class="flex-column center-aligned form-column">
@@ -140,6 +142,9 @@
 			</div>
 		</div>
 	</main>
+</div>
+</div>
+<footer><div class="orange-bar"></div></footer>
 </body>
 
 

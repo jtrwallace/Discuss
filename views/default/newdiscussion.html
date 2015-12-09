@@ -37,18 +37,9 @@
     {{include 'web2py_ajax.html'}} <!-- this includes jquery.js, calendar.js/.css and web2py.js -->
 </head>
 <body>
-	<div id="wrap">
-		<div id="discussion-target" class="content-wrapper"></div>
-	</div>
-	<footer><div class="orange-bar"></div></footer>
-	<!-- The javascript =============================== -->
-    <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
-    <script src="{{=URL('static','js/web2py-bootstrap3.js')}}"></script>
-    <script src="{{=URL('static', 'js/ractive.min.js')}}"></script>
-</body>
-
-<script id="discussion-template" type="text/ractive">
-	<nav id="discussion-nav" class="flex-row space-between full-width center-aligned">
+<div id="wrap">
+<div class="content-wrapper">
+	<nav id="index-nav" class="flex-row space-between full-width center-aligned">
 		{{=A('Discuss', _class='title', _href=URL('default', 'index'))}}
 		<div class="nav-buttons flex-row space-around">
 		{{if not auth.is_logged_in():}}
@@ -56,40 +47,61 @@
             {{=A('Sign In', _class='btn', _id='signin-button', _href=URL('default', 'user', args=['login'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
         {{pass}}
         {{if auth.is_logged_in():}}
-            {{=A('My Profile', _class='btn', _id='myprofile-button', _href=URL('default', 'user', args=['register'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
-            {{=A('Sign Out', _class='btn', _id='signout-button', _href=URL('default', 'user', args=['logout'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
+            {{=A('My Profile', _class='btn', _id='myprofile-button', _href=URL('default', 'profile'))}}
+            {{=A('Sign Out', _class='btn', _id='signout-button', _href=URL('default', 'user', args=['logout'], vars=dict(_next=URL('default'))))}}
         {{pass}}
         </div>
 	</nav>
 	<main>
-		<div class="banner-photo">
-			<img src="http://www.cocc.edu/uploadedImages/Departments_/ITS/Computer_Labs/20141104_133038.jpg" alt="Bicycle Commuter">
-			<div id="discussion-greeting" class="banner-content">
-				<div class="banner-title">Discuss Macs</div>
-				<div class="banner-text">This is where we talk about how cool Macs are! Join us in the discussion or take a look at our calendar of upcoming events!</div>
+		<div id="new-discussion-form-container" class="flex-column center-aligned form-container">
+			<div id="new-discussion-greeting" class="form-greeting">
+				<h1>New Discussion</h1>
 			</div>
-		</div>
-		<div id="discussion-nav-container" class="flex-row space-around center-aligned">
-			<button class="btn discussion-btn" id="discuss-button" on-click="discuss-button">Discuss</button>
-			<button class="btn discussion-btn" id="calendar-button" on-click="calendar-button">Calendar</button>
-			<button class="btn discussion-btn" id="members-button" on-click="members-button">Members</button>
-		</div>
+			<div class="flex-column center-aligned form-column">
+				<div class="flex-column form-column full-width" id="register-form">
+				{{=form.custom.begin}}
+					<div class="flex-column form-row space-between center-aligned" id="discussionname-row">
+						<h4>What do you want to discuss?</h4>
+						<div class="text-widget custom-form" id="form-discussionname">
+						{{=form.custom.widget.discussion_name}}
+						</div>
+					</div>
+					<div class="flex-column form-row space-between center-aligned" id="discussiondescription-row">
+						<h4>Short description of your dicsussion</h4>
+						<div class="text-widget custom-form" id="form-discussiondescription">
+						{{=form.custom.widget.discussion_description}}
+						</div>
+					</div>
+					<div class="flex-column form-row space-between center-aligned" id="discussionlocation-row">
+						<h4>City <i>(Optional)</i></h4>
+						<div class="text-widget custom-form" id="form-discussionlocation">
+						{{=form.custom.widget.discussion_location}}
+						</div>
+					</div>
+					<div class="flex-column form-row space-between center-aligned" id="bannerphotourl-row">
+						<h4>Banner Photo URL</h4>
+						<div class="text-widget custom-form" id="form-bannerphotourl">
+						{{=form.custom.widget.banner_photo_url}}
+						</div>
+					</div>
+				</div>
+				<div id="signup-form-button">{{=form.custom.submit}}</div>
+			{{=form.custom.end}}
+			</div>
+			</div>
 	</main>
-</script>
+</div>
+</div>
+<footer><div class="orange-bar"></div></footer>
+</body>
 
+{{block page_js}}
 <script>
-	$(function() {
-		// Ractive object
-		var BODY = new Ractive({
-			el: '#discussion-target',
-			template: '#discussion-template',
-			delimiters: ['{%', '%}'],
-			tripleDelimiters: ['{%%', '%%}'],
-			data: {
-				//posts_list: [],
-			}
-		});
-	});
+    jQuery("#web2py_user_form input:visible:enabled:first").focus();
+{{if request.args(0)=='register':}}
+    web2py_validate_entropy(jQuery('#auth_user_password'),100);
+{{elif request.args(0)=='change_password':}}
+    web2py_validate_entropy(jQuery('#no_table_new_password'),100);
+{{pass}}
 </script>
-
-</html>
+{{end page_js}}

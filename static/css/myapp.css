@@ -1,18 +1,46 @@
 /* line 1, ../sass/_main.scss */
-body {
-  margin: 0;
-  padding: 0;
+html, body {
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
 }
 
-/* line 6, ../sass/_main.scss */
+/* line 7, ../sass/_main.scss */
 nav {
-  margin-top: 30px;
+  margin-top: 20px;
   padding: 0px 15% 0px 15%;
   background-color: #FF9400;
   height: 70px;
 }
 
-/* line 13, ../sass/_main.scss */
+/* line 14, ../sass/_main.scss */
+.content-wrapper {
+  padding-bottom: 55px;
+  overflow: auto;
+}
+
+/* line 19, ../sass/_main.scss */
+footer {
+  position: relative;
+  margin-top: -55px;
+  height: 55px;
+  clear: both;
+}
+
+/* line 26, ../sass/_main.scss */
+.orange-bar {
+  height: 45px;
+  background-color: #FF9400;
+  position: relative;
+  top: 10px;
+}
+
+/* line 33, ../sass/_main.scss */
+#wrap {
+  min-height: 100%;
+}
+
+/* line 37, ../sass/_main.scss */
 .title {
   font-size: 38pt;
   color: white;
@@ -20,13 +48,13 @@ nav {
   letter-spacing: 2px;
 }
 
-/* line 20, ../sass/_main.scss */
+/* line 44, ../sass/_main.scss */
 .title:hover {
   text-decoration: none;
   color: white;
 }
 
-/* line 25, ../sass/_main.scss */
+/* line 49, ../sass/_main.scss */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Montserrat', sans-serif;
   color: white;
@@ -34,7 +62,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0px;
 }
 
-/* line 32, ../sass/_main.scss */
+/* line 56, ../sass/_main.scss */
 .flex-column {
   display: -webkit-flex;
   display: flex;
@@ -42,7 +70,7 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
 }
 
-/* line 39, ../sass/_main.scss */
+/* line 63, ../sass/_main.scss */
 .flex-row {
   display: -webkit-flex;
   display: flex;
@@ -50,33 +78,33 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: row;
 }
 
-/* line 46, ../sass/_main.scss */
+/* line 70, ../sass/_main.scss */
 .flex-wrap {
   -webkit-flex-wrap: wrap;
 }
 
-/* line 50, ../sass/_main.scss */
+/* line 74, ../sass/_main.scss */
 .space-between {
   justify-content: space-between;
 }
 
-/* line 54, ../sass/_main.scss */
+/* line 78, ../sass/_main.scss */
 .space-around {
   justify-content: space-around;
 }
 
-/* line 58, ../sass/_main.scss */
+/* line 82, ../sass/_main.scss */
 .full-width {
   width: 100%;
 }
 
-/* line 62, ../sass/_main.scss */
+/* line 86, ../sass/_main.scss */
 .center-aligned {
   align-items: center;
   -webkit-align-items: center;
 }
 
-/* line 67, ../sass/_main.scss */
+/* line 91, ../sass/_main.scss */
 .btn {
   border: none;
   background-color: #424242;
@@ -88,7 +116,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0px;
 }
 
-/* line 78, ../sass/_main.scss */
+/* line 102, ../sass/_main.scss */
 .btn-primary {
   border: none;
   background-color: #424242;
@@ -100,32 +128,32 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0px;
 }
 
-/* line 89, ../sass/_main.scss */
+/* line 113, ../sass/_main.scss */
 .btn:hover {
   color: #0097FF;
 }
 
-/* line 98, ../sass/_main.scss */
+/* line 122, ../sass/_main.scss */
 #signin-button {
   background-color: #0097FF;
 }
 
-/* line 102, ../sass/_main.scss */
+/* line 126, ../sass/_main.scss */
 #signin-button:hover {
   color: #424242;
 }
 
-/* line 109, ../sass/_main.scss */
+/* line 133, ../sass/_main.scss */
 #signout-button {
   background-color: red;
 }
 
-/* line 113, ../sass/_main.scss */
+/* line 137, ../sass/_main.scss */
 #signout-button:hover {
   color: #424242;
 }
 
-/* line 117, ../sass/_main.scss */
+/* line 141, ../sass/_main.scss */
 .banner-photo {
   width: 100%;
   height: 450px;
@@ -134,7 +162,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 23pt;
 }
 
-/* line 125, ../sass/_main.scss */
+/* line 149, ../sass/_main.scss */
 .banner-photo img {
   width: 100%;
   margin-top: -85px;
@@ -142,40 +170,49 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
 }
 
-/* line 132, ../sass/_main.scss */
+/* line 156, ../sass/_main.scss */
 .brightness-fifty {
   -webkit-filter: brightness(0.5);
 }
 
-/* line 136, ../sass/_main.scss */
+/* line 160, ../sass/_main.scss */
 .banner-content {
   position: absolute;
   font-family: 'Montserrat', sans-serif;
   text-shadow: 2px 2px 6px #000;
 }
 
-/* line 142, ../sass/_main.scss */
+/* line 166, ../sass/_main.scss */
 #index-greeting {
   top: 150px;
   left: 15%;
   width: 30%;
 }
 
-/* line 148, ../sass/_main.scss */
+/* line 172, ../sass/_main.scss */
 #discussion-greeting {
-  top: 150px;
-  left: 40%;
+  top: 160px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
   width: 50%;
   text-align: center;
 }
 
-/* line 155, ../sass/_main.scss */
+/* line 182, ../sass/_main.scss */
+.banner-title {
+  font-size: 36pt;
+  margin-bottom: 15px;
+}
+
+/* line 187, ../sass/_main.scss */
 #index-hello {
   font-size: 36pt;
   margin-bottom: 15px;
 }
 
-/* line 160, ../sass/_main.scss */
+/* line 192, ../sass/_main.scss */
 #search-new-container {
   position: relative;
   top: -50px;
@@ -183,7 +220,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: auto;
 }
 
-/* line 167, ../sass/_main.scss */
+/* line 199, ../sass/_main.scss */
 #search-container {
   width: 85%;
   height: 100px;
@@ -193,7 +230,7 @@ h1, h2, h3, h4, h5, h6 {
   padding-right: 25px;
 }
 
-/* line 176, ../sass/_main.scss */
+/* line 208, ../sass/_main.scss */
 .search-input {
   width: 80%;
   height: 50px;
@@ -203,24 +240,24 @@ h1, h2, h3, h4, h5, h6 {
   padding-left: 15px;
 }
 
-/* line 185, ../sass/_main.scss */
+/* line 217, ../sass/_main.scss */
 #search-button {
   background-color: #FF9400;
   height: 50px;
   width: 18%;
 }
 
-/* line 191, ../sass/_main.scss */
+/* line 223, ../sass/_main.scss */
 #search-button:hover {
   color: #424242;
 }
 
-/* line 195, ../sass/_main.scss */
+/* line 227, ../sass/_main.scss */
 #new-discussion-container {
   width: 15%;
 }
 
-/* line 199, ../sass/_main.scss */
+/* line 231, ../sass/_main.scss */
 #new-discussion-button {
   height: 100px;
   width: 100%;
@@ -231,18 +268,18 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 120%;
 }
 
-/* line 209, ../sass/_main.scss */
+/* line 241, ../sass/_main.scss */
 #new-discussion-button:hover {
   background-color: #FF9400;
   color: #424242;
 }
 
-/* line 214, ../sass/_main.scss */
+/* line 246, ../sass/_main.scss */
 #discussions-container {
   padding: 0px 15% 0px 15%;
 }
 
-/* line 218, ../sass/_main.scss */
+/* line 250, ../sass/_main.scss */
 .discussion-thumb {
   height: 190px;
   width: 280px;
@@ -250,14 +287,14 @@ h1, h2, h3, h4, h5, h6 {
   margin: 10px;
 }
 
-/* line 225, ../sass/_main.scss */
+/* line 257, ../sass/_main.scss */
 .discussion-thumb img {
   -webkit-filter: brightness(0.5);
   width: 100%;
   overflow: hidden;
 }
 
-/* line 231, ../sass/_main.scss */
+/* line 263, ../sass/_main.scss */
 .discussion-thumb h2 {
   position: absolute;
   margin-left: auto;
@@ -269,23 +306,23 @@ h1, h2, h3, h4, h5, h6 {
   text-shadow: 2px 2px 6px #000;
 }
 
-/* line 242, ../sass/_main.scss */
+/* line 274, ../sass/_main.scss */
 .discussion-thumb h2:hover {
   font-size: 35pt;
   top: 36%;
   color: #FF9400;
 }
 
-/* line 248, ../sass/_main.scss */
-#login-greeting h1 {
+/* line 280, ../sass/_main.scss */
+.from-greeting h1 {
   text-align: center;
   color: white;
   font-size: 36pt;
   margin-top: 20px;
 }
 
-/* line 255, ../sass/_main.scss */
-#signin-form-container {
+/* line 287, ../sass/_main.scss */
+.form-container {
   background-color: #424242;
   margin: 25px auto 15px auto;
   padding-top: 20px;
@@ -293,26 +330,26 @@ h1, h2, h3, h4, h5, h6 {
   width: 35%;
 }
 
-/* line 263, ../sass/_main.scss */
+/* line 295, ../sass/_main.scss */
 .form-column {
   width: 100%;
   margin: auto;
   padding: 15px;
 }
 
-/* line 269, ../sass/_main.scss */
+/* line 301, ../sass/_main.scss */
 .form-column form {
   width: 85%;
   margin: auto;
 }
 
-/* line 274, ../sass/_main.scss */
+/* line 306, ../sass/_main.scss */
 .form-row {
   margin: 10px;
   align-items: flex-start;
 }
 
-/* line 279, ../sass/_main.scss */
+/* line 311, ../sass/_main.scss */
 .form-row h4 {
   font-family: 'Lato', sans-serif;
   font-weight: 300;
@@ -320,18 +357,18 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 4px;
 }
 
-/* line 286, ../sass/_main.scss */
+/* line 318, ../sass/_main.scss */
 .custom-form {
   width: 100%;
 }
 
-/* line 290, ../sass/_main.scss */
+/* line 322, ../sass/_main.scss */
 #signup-form-button {
   margin: auto;
   text-align: center;
 }
 
-/* line 295, ../sass/_main.scss */
+/* line 327, ../sass/_main.scss */
 #signup-form-button input {
   border: none;
   background-image: none;
@@ -341,12 +378,12 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #0097FF;
 }
 
-/* line 304, ../sass/_main.scss */
+/* line 336, ../sass/_main.scss */
 #signup-form-button input:hover {
   color: #424242;
 }
 
-/* line 308, ../sass/_main.scss */
+/* line 340, ../sass/_main.scss */
 #discussion-nav-container {
   position: relative;
   top: -50px;
@@ -356,26 +393,30 @@ h1, h2, h3, h4, h5, h6 {
   height: 100px;
 }
 
-/* line 317, ../sass/_main.scss */
+/* line 349, ../sass/_main.scss */
 .discussion-btn {
   background-color: #FF9400;
   width: 25%;
+  font-size: 20pt;
 }
 
-/* line 322, ../sass/_main.scss */
+/* line 355, ../sass/_main.scss */
 .discussion-btn:hover {
   background-color: #0097FF;
   color: white;
+  font-size: 22pt;
 }
 
-/* line 327, ../sass/_main.scss */
+/* line 361, ../sass/_main.scss */
 .discussion-active-btn {
   background-color: #0097FF;
   color: white;
+  font-size: 22pt;
 }
 
-/* line 332, ../sass/_main.scss */
+/* line 367, ../sass/_main.scss */
 .discussion-active-btn:hover {
   background-color: #0097FF;
   color: white;
+  font-size: 22pt;
 }

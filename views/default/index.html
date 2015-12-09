@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<html>
 <head>
     <meta charset="utf-8">
     <!-- www.phpied.com/conditional-comments-block-downloads/ -->
@@ -37,7 +37,10 @@
     {{include 'web2py_ajax.html'}} <!-- this includes jquery.js, calendar.js/.css and web2py.js -->
 </head>
 <body>
-	<div id="index-target"></div>
+	<div id="wrap">
+		<div id="index-target" class="content-wrapper"></div>
+	</div>
+	<footer><div class="orange-bar"></div></footer>
 	<!-- The javascript =============================== -->
     <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
     <script src="{{=URL('static','js/web2py-bootstrap3.js')}}"></script>
@@ -77,7 +80,7 @@
 				<button class="btn" id="search-button" on-click="search-button">Search</button>
 			</div>
 			<div id="new-discussion-container" class="flex-column space-around center-aligned">
-				{{=A('Discuss Something New', _class='btn', _id='new-discussion-button', _href=URL('default', 'discussion'))}}
+				{{=A('Discuss Something New', _class='btn', _id='new-discussion-button', _href=URL('default', 'newdiscussion'))}}
 			</div>
 		</div>
 		<div id="discussions-container" class="flex-row center-aligned flex-wrap space-between">
