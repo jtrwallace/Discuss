@@ -8,15 +8,28 @@
 ## - download is for downloading files uploaded in the db (does streaming)
 #########################################################################
 
+from gluon import utils as gluon_utils
+import json
+
 def index():
     return dict()
 
 def newdiscussion():
-    form=SQLFORM(db.discussions)
-    if form.process().accepted:
-        db.discussions.discussion_name.represent = lambda discussion_name,row: discussion_name.capitalize()
-        redirect(URL('default', 'index'))
-    return dict(form=form)
+    discussion_id = gluon_utils.web2py_uuid()
+    return dict(discussion_id=discussion_id)
+
+@auth.requires_signature()
+def add_discussion():
+    db.discussions.update_or_insert((db.discussions.discussion_id == request.vars.discussion_id),
+            discussion_id=request.vars.discussion_id,
+            discussion_name=request.vars.discussion_name,
+            discussion_description=request.vars.discussion_description,
+            discussion_location=request.vars.discussion_location,
+            banner_photo_url=request.vars.banner_photo_url,
+            discussion_last_updated=request.vars.discussion_last_updated,
+            discussion_pretty_updated=request.vars.discussion_pretty_updated
+            )
+    return "ok"
 
 def discussion():
     return dict()

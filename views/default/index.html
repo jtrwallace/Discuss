@@ -79,9 +79,11 @@
 				<input type="text" class="search-input" id="search-input-index" name="search-input"  placeholder="All Discussions" maxlength="30"/>
 				<button class="btn" id="search-button" on-click="search-button">Search</button>
 			</div>
+			{{if auth.is_logged_in():}}
 			<div id="new-discussion-container" class="flex-column space-around center-aligned">
-				{{=A('Discuss Something New', _class='btn', _id='new-discussion-button', _href=URL('default', 'newdiscussion'))}}
+				<button class="btn blue-button" id="new-discussion-button" on-click="new-discussion-button">Discuss Something New</button>
 			</div>
+			{{pass}}
 		</div>
 		<div id="discussions-container" class="flex-row center-aligned flex-wrap space-between">
 			<div class="discussion-thumb">
@@ -125,10 +127,13 @@
 			delimiters: ['{%', '%}'],
 			tripleDelimiters: ['{%%', '%%}'],
 			data: {
-				//posts_list: [],
+				new_discussion_url: "{{=URL('default', 'newdiscussion')}}"
 			}
 		});
 
+		BODY.on("new-discussion-button", function(e) {
+            window.location.href = BODY.get('new_discussion_url');
+        });
 
 	});
 </script>

@@ -37,8 +37,17 @@
     {{include 'web2py_ajax.html'}} <!-- this includes jquery.js, calendar.js/.css and web2py.js -->
 </head>
 <body>
-<div id="wrap">
-<div class="content-wrapper">
+	<div id="wrap">
+		<div id="new-discussion-target" class="content-wrapper"></div>
+	</div>
+	<footer><div class="orange-bar"></div></footer>
+	<!-- The javascript =============================== -->
+    <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
+    <script src="{{=URL('static','js/web2py-bootstrap3.js')}}"></script>
+    <script src="{{=URL('static', 'js/ractive.min.js')}}"></script>
+</body>
+
+<script id="new-discussion-template" type="text/ractive">
 	<nav id="index-nav" class="flex-row space-between full-width center-aligned">
 		{{=A('Discuss', _class='title', _href=URL('default', 'index'))}}
 		<div class="nav-buttons flex-row space-around">
@@ -59,49 +68,86 @@
 			</div>
 			<div class="flex-column center-aligned form-column">
 				<div class="flex-column form-column full-width" id="register-form">
-				{{=form.custom.begin}}
 					<div class="flex-column form-row space-between center-aligned" id="discussionname-row">
 						<h4>What do you want to discuss?</h4>
-						<div class="text-widget custom-form" id="form-discussionname">
-						{{=form.custom.widget.discussion_name}}
-						</div>
+						<input type="text" class="text-widget custom-form form-control" id="form-discussionname" name="new_discussion_name" value="{% discussion_name %}" maxlength="25" data-boardid=""/>
 					</div>
 					<div class="flex-column form-row space-between center-aligned" id="discussiondescription-row">
 						<h4>Short description of your dicsussion</h4>
-						<div class="text-widget custom-form" id="form-discussiondescription">
-						{{=form.custom.widget.discussion_description}}
-						</div>
+						<textarea name="new_discussion_description" class="new_discussion_description form-control" value="{% discussion_description %}" cols="40" rows="4" maxlength="130"></textarea>
 					</div>
 					<div class="flex-column form-row space-between center-aligned" id="discussionlocation-row">
 						<h4>City <i>(Optional)</i></h4>
-						<div class="text-widget custom-form" id="form-discussionlocation">
-						{{=form.custom.widget.discussion_location}}
-						</div>
+						<input type="text" class="text-widget custom-form form-control" id="form-discussionlocation" name="new_discussion_location" value="{% discussion_location %}" maxlength="50" data-boardid=""/>
 					</div>
 					<div class="flex-column form-row space-between center-aligned" id="bannerphotourl-row">
 						<h4>Banner Photo URL</h4>
-						<div class="text-widget custom-form" id="form-bannerphotourl">
-						{{=form.custom.widget.banner_photo_url}}
-						</div>
+						<input type="text" class="text-widget custom-form form-control" id="form-discussionlocation" name="new_discussion_location" value="{% banner_photo_url %}" data-boardid=""/>
 					</div>
+					<button class="btn blue-button" id="submit-button" on-click="submit-button">Submit</button>
 				</div>
-				<div id="signup-form-button">{{=form.custom.submit}}</div>
-			{{=form.custom.end}}
 			</div>
 			</div>
 	</main>
-</div>
-</div>
-<footer><div class="orange-bar"></div></footer>
-</body>
-
-{{block page_js}}
-<script>
-    jQuery("#web2py_user_form input:visible:enabled:first").focus();
-{{if request.args(0)=='register':}}
-    web2py_validate_entropy(jQuery('#auth_user_password'),100);
-{{elif request.args(0)=='change_password':}}
-    web2py_validate_entropy(jQuery('#no_table_new_password'),100);
-{{pass}}
 </script>
-{{end page_js}}
+
+<script>
+	$(function() {
+		// Ractive object
+		var BODY = new Ractive({
+			el: '#new-discussion-target',
+			template: '#new-discussion-template',
+			delimiters: ['{%', '%}'],
+			tripleDelimiters: ['{%%', '%%}'],
+			data: {
+				discussion_name: "",
+				discussion_description: "",
+				discussion_location: "",
+				banner_photo_url: "http://www.cocc.edu/uploadedImages/Departments_/ITS/Computer_Labs/20141104_133038.jpg",
+				discussion_id: "{{=discussion_id}}",
+				index_url: "{{=URL('default', 'index')}}"
+			}
+		});
+
+		//To retrieve the time in UTC string format
+		function get_UTC_String() {
+			var date = new Date();
+			return date.toUTCString();
+		}
+
+		//Makes the date more readable and in user's time zone.
+		function get_pretty_time() {
+			var date = new Date();
+			var full_date = date.toString();
+			var split_date = full_date.split(" ");
+			var split_time = split_date[4].split(":");
+			return split_date[1] + " " + split_date[2] + " " + split_time[0] + ":" + split_time[1];
+		}
+
+
+		function send() {
+			$.ajax("{{=URL('default', 'add_discussion', user_signature=True)}}",
+					{
+						data: {
+							discussion_name: BODY.get('discussion_name'), //request.vars.discussion_name
+							discussion_description: BODY.get('discussion_description'), //request.vars.discussion_description
+							discussion_location: BODY.get('discussion_location'), //request.vars.discussion_location
+							banner_photo_url: BODY.get('banner_photo_url'), //request.vars.banner_photo_url
+							discussion_id: BODY.get('discussion_id'), //request.vars.discussion_id
+							discussion_last_updated: get_UTC_String(), //request.vars.discussion_last_updated
+							discussion_pretty_updated: get_pretty_time() //request.vars.discussion_pretty_updated
+						},
+						method: 'POST',
+						success: function() {},
+						error: function() {}
+					}
+			);
+		}
+
+		BODY.on("submit-button", function(e) {
+            send();
+            window.location.href = BODY.get('index_url');
+        });
+
+	});
+</script>

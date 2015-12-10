@@ -24,7 +24,7 @@ db.define_table('discussions',
     Field('discussion_author', db.auth_user, default=auth.user_id),
     Field('discussion_last_updated', 'string', default=""),
     Field('discussion_pretty_updated', 'string', default=""),
-    Field('banner_photo_url', 'string', default="http://www.cocc.edu/uploadedImages/Departments_/ITS/Computer_Labs/20141104_133038.jpg"),
+    Field('banner_photo_url', 'string'),
     Field('discussion_id'),
     Field('is_draft', 'boolean', default=False)
     )
