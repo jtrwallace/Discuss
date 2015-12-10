@@ -86,34 +86,12 @@
 			{{pass}}
 		</div>
 		<div id="discussions-container" class="flex-row center-aligned flex-wrap space-between">
+			{% #discussions_list %}
 			<div class="discussion-thumb">
-				<img src="http://ryersongcm.ca/sites/default/files/_FAJ1679_0.jpg" alt="Bicycle Commuter">
-				<h2>Macs</h2>
+				<img src="{% banner_photo_url %}">
+				<a href="{% discussion_url + "/" + discussion_id %}"><h2>{% discussion_name %}</h2></a>
 			</div>
-			<div class="discussion-thumb">
-				<img src="http://ryersongcm.ca/sites/default/files/_FAJ1679_0.jpg" alt="Bicycle Commuter">
-				<h2>Macs</h2>
-			</div>
-			<div class="discussion-thumb">
-				<img src="http://ryersongcm.ca/sites/default/files/_FAJ1679_0.jpg" alt="Bicycle Commuter">
-				<h2>Macs</h2>
-			</div>
-			<div class="discussion-thumb">
-				<img src="http://ryersongcm.ca/sites/default/files/_FAJ1679_0.jpg" alt="Bicycle Commuter">
-				<h2>Macs</h2>
-			</div>
-			<div class="discussion-thumb">
-				<img src="http://ryersongcm.ca/sites/default/files/_FAJ1679_0.jpg" alt="Bicycle Commuter">
-				<h2>Macs</h2>
-			</div>
-			<div class="discussion-thumb">
-				<img src="http://ryersongcm.ca/sites/default/files/_FAJ1679_0.jpg" alt="Bicycle Commuter">
-				<h2>Macs</h2>
-			</div>
-			<div class="discussion-thumb">
-				<img src="http://ryersongcm.ca/sites/default/files/_FAJ1679_0.jpg" alt="Bicycle Commuter">
-				<h2>Macs</h2>
-			</div>
+			{% /discussions_list %}
 		</div>
 	</main>
 </script>
@@ -127,9 +105,41 @@
 			delimiters: ['{%', '%}'],
 			tripleDelimiters: ['{%%', '%%}'],
 			data: {
-				new_discussion_url: "{{=URL('default', 'newdiscussion')}}"
+				discussions_list: [],
+				new_discussion_url: "{{=URL('default', 'newdiscussion')}}",
+				discussion_url: "{{=URL('default', 'discussion')}}"
 			}
 		});
+
+		function load_discussions() {
+			$.ajax("{{=URL('default', 'load_discussions')}}",
+					{
+						method: 'POST',
+						success: function (data) {
+							sort_list_by_date(data, 'discussion_last_updated', set_BODY_list);
+						}
+					}
+			);
+		}
+
+		load_discussions();
+
+		//Sort the discussions based on the last_updated field and update the BODY list.
+		function sort_list_by_date(data, field, callback) {
+			if (data.length > 1) {
+				data.sort(function (a, b) {
+					var date1 = Date.parse(a[field]);
+					var date2 = Date.parse(b[field]);
+					return date2 - date1;
+				});
+			}
+			callback(data);
+		}
+
+		//Reset the MAIN boards list.
+		function set_BODY_list(list) {
+			BODY.set('discussions_list', list);
+		}
 
 		BODY.on("new-discussion-button", function(e) {
             window.location.href = BODY.get('new_discussion_url');

@@ -283,37 +283,43 @@ h1, h2, h3, h4, h5, h6 {
 .discussion-thumb {
   height: 190px;
   width: 280px;
-  position: relative;
   margin: 10px;
+  position: relative;
 }
 
 /* line 257, ../sass/_main.scss */
 .discussion-thumb img {
   -webkit-filter: brightness(0.5);
   width: 100%;
+  max-height: 100%;
   overflow: hidden;
 }
 
-/* line 263, ../sass/_main.scss */
-.discussion-thumb h2 {
+/* line 264, ../sass/_main.scss */
+.discussion-thumb a {
   position: absolute;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
+  padding: 5px;
   text-align: center;
-  top: 38%;
+  top: 50%;
+  transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
   font-size: 30pt;
   text-shadow: 2px 2px 6px #000;
 }
 
-/* line 274, ../sass/_main.scss */
+/* line 281, ../sass/_main.scss */
 .discussion-thumb h2:hover {
-  font-size: 35pt;
-  top: 36%;
+  font-size: 31pt;
   color: #FF9400;
 }
 
-/* line 280, ../sass/_main.scss */
+/* line 286, ../sass/_main.scss */
 .from-greeting h1 {
   text-align: center;
   color: white;
@@ -321,7 +327,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 30px;
 }
 
-/* line 287, ../sass/_main.scss */
+/* line 293, ../sass/_main.scss */
 .form-container {
   background-color: #424242;
   margin: 25px auto 15px auto;
@@ -330,26 +336,26 @@ h1, h2, h3, h4, h5, h6 {
   width: 35%;
 }
 
-/* line 295, ../sass/_main.scss */
+/* line 301, ../sass/_main.scss */
 .form-column {
   width: 100%;
   margin: auto;
   padding: 15px;
 }
 
-/* line 301, ../sass/_main.scss */
+/* line 307, ../sass/_main.scss */
 .form-column form {
   width: 85%;
   margin: auto;
 }
 
-/* line 306, ../sass/_main.scss */
+/* line 312, ../sass/_main.scss */
 .form-row {
   margin: 10px;
   align-items: flex-start;
 }
 
-/* line 311, ../sass/_main.scss */
+/* line 317, ../sass/_main.scss */
 .form-row h4 {
   font-family: 'Lato', sans-serif;
   font-weight: 300;
@@ -357,18 +363,18 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 4px;
 }
 
-/* line 318, ../sass/_main.scss */
+/* line 324, ../sass/_main.scss */
 .custom-form {
   width: 100%;
 }
 
-/* line 322, ../sass/_main.scss */
+/* line 328, ../sass/_main.scss */
 #signup-form-button {
   margin: auto;
   text-align: center;
 }
 
-/* line 327, ../sass/_main.scss */
+/* line 333, ../sass/_main.scss */
 #signup-form-button input {
   border: none;
   background-image: none;
@@ -378,12 +384,12 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #0097FF;
 }
 
-/* line 336, ../sass/_main.scss */
+/* line 342, ../sass/_main.scss */
 #signup-form-button input:hover {
   color: #424242;
 }
 
-/* line 340, ../sass/_main.scss */
+/* line 346, ../sass/_main.scss */
 #discussion-nav-container {
   position: relative;
   top: -50px;
@@ -393,57 +399,57 @@ h1, h2, h3, h4, h5, h6 {
   height: 100px;
 }
 
-/* line 349, ../sass/_main.scss */
+/* line 355, ../sass/_main.scss */
 .discussion-btn {
   background-color: #FF9400;
   width: 25%;
   font-size: 20pt;
 }
 
-/* line 355, ../sass/_main.scss */
+/* line 361, ../sass/_main.scss */
 .discussion-btn:hover {
   background-color: #0097FF;
   color: white;
   font-size: 22pt;
 }
 
-/* line 361, ../sass/_main.scss */
+/* line 367, ../sass/_main.scss */
 .discussion-active-btn {
   background-color: #0097FF;
   color: white;
   font-size: 22pt;
 }
 
-/* line 367, ../sass/_main.scss */
+/* line 373, ../sass/_main.scss */
 .discussion-active-btn:hover {
   background-color: #0097FF;
   color: white;
   font-size: 22pt;
 }
 
-/* line 373, ../sass/_main.scss */
+/* line 379, ../sass/_main.scss */
 .blue-button {
   background-color: #0097FF;
   color: white;
   margin: auto;
 }
 
-/* line 379, ../sass/_main.scss */
+/* line 385, ../sass/_main.scss */
 .blue-button:hover {
   color: #424242;
 }
 
-/* line 383, ../sass/_main.scss */
+/* line 389, ../sass/_main.scss */
 #submit-button {
   margin-top: 10px;
 }
 
-/* line 387, ../sass/_main.scss */
+/* line 393, ../sass/_main.scss */
 #register-form {
   padding-top: 0px;
 }
 
-/* line 391, ../sass/_main.scss */
+/* line 397, ../sass/_main.scss */
 #new-discussion-greeting h1 {
   margin-top: 10px;
 }

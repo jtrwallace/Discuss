@@ -18,6 +18,10 @@ def newdiscussion():
     discussion_id = gluon_utils.web2py_uuid()
     return dict(discussion_id=discussion_id)
 
+def load_discussions():
+    discussions = db().select(db.discussions.ALL)
+    return response.json(list(discussions))
+
 @auth.requires_signature()
 def add_discussion():
     db.discussions.update_or_insert((db.discussions.discussion_id == request.vars.discussion_id),
@@ -32,7 +36,8 @@ def add_discussion():
     return "ok"
 
 def discussion():
-    return dict()
+    discussion_id = request.args(0)
+    return locals()
 
 def user():
     """
