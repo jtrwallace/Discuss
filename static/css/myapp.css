@@ -277,26 +277,28 @@ h1, h2, h3, h4, h5, h6 {
 /* line 246, ../sass/_main.scss */
 #discussions-container {
   padding: 0px 15% 0px 15%;
+  margin-bottom: 40px;
 }
 
-/* line 250, ../sass/_main.scss */
+/* line 251, ../sass/_main.scss */
 .discussion-thumb {
   height: 190px;
   width: 280px;
-  margin: 10px;
+  margin: 10px 10px 20px 10px;
   position: relative;
 }
 
-/* line 257, ../sass/_main.scss */
+/* line 258, ../sass/_main.scss */
 .discussion-thumb img {
   -webkit-filter: brightness(0.5);
   width: 100%;
   max-height: 100%;
+  min-height: 100%;
   overflow: hidden;
 }
 
-/* line 264, ../sass/_main.scss */
-.discussion-thumb a {
+/* line 266, ../sass/_main.scss */
+.discussion-thumb a h2 {
   position: absolute;
   margin-left: auto;
   margin-right: auto;
@@ -311,15 +313,16 @@ h1, h2, h3, h4, h5, h6 {
   -o-transform: translateY(-50%);
   font-size: 30pt;
   text-shadow: 2px 2px 6px #000;
+  text-decoration: none;
 }
 
-/* line 281, ../sass/_main.scss */
+/* line 284, ../sass/_main.scss */
 .discussion-thumb h2:hover {
   font-size: 31pt;
   color: #FF9400;
 }
 
-/* line 286, ../sass/_main.scss */
+/* line 289, ../sass/_main.scss */
 .from-greeting h1 {
   text-align: center;
   color: white;
@@ -327,7 +330,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 30px;
 }
 
-/* line 293, ../sass/_main.scss */
+/* line 296, ../sass/_main.scss */
 .form-container {
   background-color: #424242;
   margin: 25px auto 15px auto;
@@ -336,26 +339,26 @@ h1, h2, h3, h4, h5, h6 {
   width: 35%;
 }
 
-/* line 301, ../sass/_main.scss */
+/* line 304, ../sass/_main.scss */
 .form-column {
   width: 100%;
   margin: auto;
   padding: 15px;
 }
 
-/* line 307, ../sass/_main.scss */
+/* line 310, ../sass/_main.scss */
 .form-column form {
   width: 85%;
   margin: auto;
 }
 
-/* line 312, ../sass/_main.scss */
+/* line 315, ../sass/_main.scss */
 .form-row {
   margin: 10px;
   align-items: flex-start;
 }
 
-/* line 317, ../sass/_main.scss */
+/* line 320, ../sass/_main.scss */
 .form-row h4 {
   font-family: 'Lato', sans-serif;
   font-weight: 300;
@@ -363,18 +366,18 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 4px;
 }
 
-/* line 324, ../sass/_main.scss */
+/* line 327, ../sass/_main.scss */
 .custom-form {
   width: 100%;
 }
 
-/* line 328, ../sass/_main.scss */
+/* line 331, ../sass/_main.scss */
 #signup-form-button {
   margin: auto;
   text-align: center;
 }
 
-/* line 333, ../sass/_main.scss */
+/* line 336, ../sass/_main.scss */
 #signup-form-button input {
   border: none;
   background-image: none;
@@ -384,12 +387,12 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #0097FF;
 }
 
-/* line 342, ../sass/_main.scss */
+/* line 345, ../sass/_main.scss */
 #signup-form-button input:hover {
   color: #424242;
 }
 
-/* line 346, ../sass/_main.scss */
+/* line 349, ../sass/_main.scss */
 #discussion-nav-container {
   position: relative;
   top: -50px;
@@ -399,57 +402,57 @@ h1, h2, h3, h4, h5, h6 {
   height: 100px;
 }
 
-/* line 355, ../sass/_main.scss */
+/* line 358, ../sass/_main.scss */
 .discussion-btn {
   background-color: #FF9400;
   width: 25%;
   font-size: 20pt;
 }
 
-/* line 361, ../sass/_main.scss */
+/* line 364, ../sass/_main.scss */
 .discussion-btn:hover {
   background-color: #0097FF;
   color: white;
   font-size: 22pt;
 }
 
-/* line 367, ../sass/_main.scss */
+/* line 370, ../sass/_main.scss */
 .discussion-active-btn {
   background-color: #0097FF;
   color: white;
   font-size: 22pt;
 }
 
-/* line 373, ../sass/_main.scss */
+/* line 376, ../sass/_main.scss */
 .discussion-active-btn:hover {
   background-color: #0097FF;
   color: white;
   font-size: 22pt;
 }
 
-/* line 379, ../sass/_main.scss */
+/* line 382, ../sass/_main.scss */
 .blue-button {
   background-color: #0097FF;
   color: white;
   margin: auto;
 }
 
-/* line 385, ../sass/_main.scss */
+/* line 388, ../sass/_main.scss */
 .blue-button:hover {
   color: #424242;
 }
 
-/* line 389, ../sass/_main.scss */
+/* line 392, ../sass/_main.scss */
 #submit-button {
   margin-top: 10px;
 }
 
-/* line 393, ../sass/_main.scss */
+/* line 396, ../sass/_main.scss */
 #register-form {
   padding-top: 0px;
 }
 
-/* line 397, ../sass/_main.scss */
+/* line 400, ../sass/_main.scss */
 #new-discussion-greeting h1 {
   margin-top: 10px;
 }

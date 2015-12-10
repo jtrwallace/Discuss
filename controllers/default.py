@@ -22,6 +22,10 @@ def load_discussions():
     discussions = db().select(db.discussions.ALL)
     return response.json(list(discussions))
 
+def load_single_discussion():
+    discussion = db(db.discussions.discussion_id == request.vars.discussion_id).select().first()
+    return response.json(discussion)
+
 @auth.requires_signature()
 def add_discussion():
     db.discussions.update_or_insert((db.discussions.discussion_id == request.vars.discussion_id),

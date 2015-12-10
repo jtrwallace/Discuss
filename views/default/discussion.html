@@ -63,10 +63,10 @@
 	</nav>
 	<main>
 		<div class="banner-photo">
-			<img src="http://www.cocc.edu/uploadedImages/Departments_/ITS/Computer_Labs/20141104_133038.jpg" alt="Bicycle Commuter">
+			<img src="{% discussion['banner_photo_url'] %}" alt="Bicycle Commuter">
 			<div id="discussion-greeting" class="banner-content">
-				<div class="banner-title">Discuss Macs</div>
-				<div class="banner-text">This is where we talk about how cool Macs are! Join us in the discussion or take a look at our calendar of upcoming events!</div>
+				<div class="banner-title">{% discussion['discussion_name'] %}</div>
+				<div class="banner-text">{% discussion['discussion_description'] %}</div>
 			</div>
 		</div>
 		<div id="discussion-nav-container" class="flex-row space-around center-aligned">
@@ -86,9 +86,71 @@
 			delimiters: ['{%', '%}'],
 			tripleDelimiters: ['{%%', '%%}'],
 			data: {
-				//posts_list: [],
+				posts_list: [],
+				discussion: ""
 			}
 		});
+
+
+		function load_posts() {
+			$.ajax("{{=URL('default', 'load_discussions')}}",
+					{
+						method: 'POST',
+						success: function (data) {
+							sort_list_by_date(data, 'post_last_updated', set_BODY_list);
+						}
+					}
+			);
+		}
+
+		function load_discussion() {
+			//Load the discussion information.
+			$.ajax("{{=URL('default', 'load_single_discussion')}}",
+					{
+						data: {
+							discussion_id: "{{=discussion_id}}" //request.vars.discussion_id
+						},
+						method: 'POST',
+						success: function (data) {
+							BODY.set('discussion', data);
+						}
+					}
+			);
+
+		}
+
+		function set_active_button(name) {
+			switch(name) {
+				case 'calendar': set_calendar_active(); break;
+                case 'members': set_members_active(); break;
+                default: set_discuss_active();
+			}
+		}
+
+		function set_discuss_active() {
+			var element = document.getElementById("discuss-button");
+		}
+
+		load_discussion();
+		load_posts();
+
+		//Sort the posts based on the last_updated field and update the BODY list.
+		function sort_list_by_date(data, field, callback) {
+			if (data.length > 1) {
+				data.sort(function (a, b) {
+					var date1 = Date.parse(a[field]);
+					var date2 = Date.parse(b[field]);
+					return date2 - date1;
+				});
+			}
+			callback(data);
+		}
+
+		//Reset the MAIN boards list.
+		function set_BODY_list(list) {
+			BODY.set('posts_list', list);
+		}
+
 	});
 </script>
 
