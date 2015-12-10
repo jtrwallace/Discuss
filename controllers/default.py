@@ -31,6 +31,13 @@ def load_discussion_from_post():
     discussion = db(db.discussions.id == post['discussion_id']).select().first()
     return response.json(discussion)
 
+def update_views():
+    post = db(db.posts.post_id == request.vars.post_id).select().first()
+    views = post['post_views'] + 1
+    db.posts.update_or_insert((db.posts.post_id == request.vars.post_id),
+            post_views=views)
+    return "ok"
+
 def search_discussions():
     search_input = request.vars.search_input.lower()
     string_length = len(search_input)
@@ -151,6 +158,9 @@ def add_reply():
         post = db(db.posts.post_id == request.vars.post_id).select().first()
     else:
         post = db(db.posts.id == request.vars.post_id).select().first()
+    replies = post['post_replies'] + 1
+    db.posts.update_or_insert((db.posts.post_id == request.vars.post_id),
+            post_replies=replies)
     reply_author_name = auth.user.first_name + " " + auth.user.last_name
     db.replies.update_or_insert((db.replies.reply_id == request.vars.reply_id),
             reply_id=request.vars.reply_id,

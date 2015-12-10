@@ -91,7 +91,6 @@
 			</div>
 		</div>
 		{% #if number_of_replies == 0 %}
-		<button class="btn blue-button" id="post-reply-button" on-click="new-reply-button" data-replyid="{% reply_id %}">Post Reply</button>
 			{% /if %}
 		{% #if number_of_replies > 0 %}
 		{% #replies_list %}
@@ -135,6 +134,21 @@
 				number_of_replies: 0
 			}
 		});
+
+        function update_views() {
+            $.ajax("{{=URL('default', 'update_views')}}",
+					{
+						data: {
+							post_id: "{{=post_id}}" //request.vars.post_id
+						},
+						method: 'POST',
+						success: function (data) {
+						}
+					}
+			);
+        }
+
+        update_views();
 
 		function load_replies() {
 			$.ajax("{{=URL('default', 'load_replies')}}",
@@ -355,6 +369,10 @@
 						method: 'POST',
 						success: function() {
 							load_replies();
+                            var post = MAIN.get('post');
+                            replies = post['post_replies'] + 1;
+                            post['post_replies'] = replies;
+                            MAIN.set('post', post);
 						},
 						error: function() {}
 					}

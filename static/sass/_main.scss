@@ -637,15 +637,19 @@ textarea.post_draft_content.form-control {
 
 #original-post {
   margin: auto;
-  background-color: #E3E3E3;
   height: 180px;
+  font-family: 'Lato', sans-serif;
   max-height: 150px;
+  width: 100% !important;
+  background-color: #424242;
+  color: white;
 }
 
 #original-post-title-content-container {
   width: 85%;
   margin: auto;
   padding: 10px 10px 10px 20px;
+  height: 150px;
 }
 
 #original-post-title {
@@ -656,6 +660,11 @@ textarea.post_draft_content.form-control {
 #original-post-content {
   max-height: 100px;
   overflow: scroll;
+  height: 100px;
+  padding: 5px;
+  background-color: #E3E3E3;
+  border-radius: 4px;
+  color: black;
 }
 
 #original-post-rest-container {
@@ -677,7 +686,15 @@ textarea.post_draft_content.form-control {
 #reply-post-draft {
   height: 200px;
   width: 100%;
-  padding-left: 10%;
+  padding: 2%;
+}
+
+#save-reply-button {
+  background-color: #008000;
+}
+
+#save-reply-button:hover {
+  color: white;
 }
 
 #reply-post {
@@ -690,7 +707,13 @@ textarea.post_draft_content.form-control {
   width: 85%;
   height: 100px;
   overflow: scroll;
+  padding: 5px;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  background-color: #E3E3E3;
 }
+
 
 #reply-post-rest-container {
   width: 15%;
