@@ -635,43 +635,71 @@ h1, h2, h3, h4, h5, h6 {
 /* line 553, ../sass/_main.scss */
 #forum-post-draft {
   width: 80%;
-  height: 150px;
+  height: 200px;
   padding: 0px 15px 0px 15px;
   border-top-style: solid;
   border-top-width: 1px;
   border-top-color: #424242;
   font-family: 'Lato', sans-serif;
-  font-size: 15pt;
+  font-size: 12pt;
+  padding-top: 10px;
 }
 
-/* line 564, ../sass/_main.scss */
+/* line 565, ../sass/_main.scss */
+#form-post-draft-container {
+  width: 80%;
+}
+
+/* line 569, ../sass/_main.scss */
+#save-button-container {
+  width: 20%;
+  position: relative;
+}
+
+/* line 574, ../sass/_main.scss */
+#save-button {
+  height: 60%;
+  width: 60%;
+  margin: auto;
+  margin-left: 25%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* line 584, ../sass/_main.scss */
+textarea.post_draft_content.form-control {
+  height: 90px;
+}
+
+/* line 588, ../sass/_main.scss */
 #forum-post-author-and-date {
   font-size: 9pt;
   font-style: italic;
 }
 
-/* line 569, ../sass/_main.scss */
+/* line 593, ../sass/_main.scss */
 #forum-post-last-post-author {
   font-size: 13pt;
 }
 
-/* line 573, ../sass/_main.scss */
+/* line 597, ../sass/_main.scss */
 #forum-post-last-post-date {
   font-size: 9pt;
   font-style: italic;
 }
 
-/* line 578, ../sass/_main.scss */
+/* line 602, ../sass/_main.scss */
 .single-forum-post:nth-child(even) {
   background-color: #FFF1E3;
 }
 
-/* line 582, ../sass/_main.scss */
+/* line 606, ../sass/_main.scss */
 .single-forum-post:nth-child(odd) {
   background-color: #E3E3E3;
 }
 
-/* line 586, ../sass/_main.scss */
+/* line 610, ../sass/_main.scss */
 .no_posts {
   width: 80%;
   font-family: 'Lato', sans-serif;
@@ -686,7 +714,7 @@ h1, h2, h3, h4, h5, h6 {
   border-top-color: #424242;
 }
 
-/* line 600, ../sass/_main.scss */
+/* line 624, ../sass/_main.scss */
 #calendar {
   width: 80%;
   margin: auto;

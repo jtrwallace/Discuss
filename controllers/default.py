@@ -81,6 +81,39 @@ def load_posts():
     discussion_posts = my_drafts.select() | all_completed_posts.select()
     return response.json(list(discussion_posts))
 
+@auth.requires_signature()
+def add_post():
+    if len(request.vars.discussion_id) == 36:
+        discussion = db(db.discussions.discussion_id == request.vars.discussion_id).select().first()
+    else:
+        discussion = db(db.discussions.id == request.vars.discussion_id).select().first()
+    post_author_name = auth.user.first_name + " " + auth.user.last_name
+    db.posts.update_or_insert((db.posts.post_id == request.vars.post_id),
+            post_id=request.vars.post_id,
+            post_title=request.vars.post_title,
+            post_author_name=post_author_name,
+            post_content=request.vars.post_content,
+            is_draft=json.loads(request.vars.is_draft),
+            active_draft_content=request.vars.active_draft_content,
+            active_draft_title=request.vars.active_draft_title,
+            posting_time=request.vars.posting_time,
+            posting_time_pretty=request.vars.posting_time_pretty,
+            last_reply_time=request.vars.posting_time,
+            last_reply_time_pretty=request.vars.posting_time_pretty,
+            last_reply_author_name=post_author_name,
+            discussion_id=discussion['id']
+            )
+    db.discussions.update_or_insert((db.discussions.discussion_id == request.vars.discussion_id),
+            discussion_last_updated=request.vars.posting_time,
+            discussion_pretty_updated=request.vars.posting_time_pretty
+            )
+    return "ok"
+
+@auth.requires_signature()
+def del_post():
+    db(db.posts.post_id == request.vars.post_id).delete()
+    return "ok"
+
 def load_members():
     discussion = db(db.discussions.discussion_id == request.vars.discussion_id).select().first()
     records = db(db.membership.discussion==discussion['id']).select()

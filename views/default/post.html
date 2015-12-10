@@ -41,10 +41,8 @@
 <body>
 	<div id="wrap">
 		<div class="content-wrapper">
-			<div id="discussion-target"></div>
-			<div id="discussion-forum-target"></div>
-			<div id="discussion-calendar-target"></div>
-			<div id="discussion-members-target"></div>
+			<div id="post-target"></div>
+			<div id="post-replies-target"></div>
 		</div>
 	</div>
 	<footer><div class="orange-bar"></div></footer>
@@ -189,7 +187,7 @@
 				is_not_member: true
 			}
 		});
-		
+
 		var DISCUSS = new Ractive({
 			el: '#discussion-forum-target',
 			template: '#discussion-forum-template',
@@ -201,7 +199,7 @@
 				latest_post_id: ""
 			}
 		});
-		
+
 		var CALENDAR = new Ractive({
 			el: '#discussion-calendar-target',
 			template: '#discussion-calendar-template',
@@ -211,7 +209,7 @@
 
 			}
 		});
-		
+
 		var MEMBERS = new Ractive({
 			el: '#discussion-members-target',
 			template: '#discussion-members-template',
