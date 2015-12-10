@@ -76,7 +76,7 @@
 		</div>
 		<div id="search-new-container" class="flex-row space-around center-aligned">
 			<div id="search-container" class="flex-row space-between center-aligned">
-				<input type="text" class="search-input" id="search-input-index" name="search-input"  placeholder=" All Discussions" maxlength="30"/>
+				<input type="text" class="search-input" id="search-input-index" name="search-input" value="{% search_input %}" placeholder=" All Discussions" maxlength="30"/>
 				<button class="btn" id="search-button" on-click="search-button">Search</button>
 			</div>
 			{{if auth.is_logged_in():}}
@@ -107,7 +107,8 @@
 			data: {
 				discussions_list: [],
 				new_discussion_url: "{{=URL('default', 'newdiscussion')}}",
-				discussion_url: "{{=URL('default', 'discussion')}}"
+				discussion_url: "{{=URL('default', 'discussion')}}",
+				search_input: ""
 			}
 		});
 
@@ -140,6 +141,28 @@
 		function set_BODY_list(list) {
 			BODY.set('discussions_list', list);
 		}
+
+		function search() {
+
+		}
+
+		BODY.on("search-button", function(e) {
+			if(BODY.get('search_input') === "") {
+				load_discussions();
+			} else {
+				$.ajax("{{=URL('default', 'search_discussions')}}",
+					{
+						data: {
+							search_input: BODY.get('search_input') //request.vars.search_input
+						},
+						method: 'POST',
+						success: function (data) {
+							set_BODY_list(data);
+						}
+					}
+			);
+			}
+		});
 
 		BODY.on("new-discussion-button", function(e) {
             window.location.href = BODY.get('new_discussion_url');

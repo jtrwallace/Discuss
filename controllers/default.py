@@ -26,6 +26,17 @@ def load_single_discussion():
     discussion = db(db.discussions.discussion_id == request.vars.discussion_id).select().first()
     return response.json(discussion)
 
+def search_discussions():
+    search_input = request.vars.search_input.lower()
+    string_length = len(search_input)
+    discussions = db().select(db.discussions.ALL)
+    matched_discussions = []
+    for discussion in discussions:
+        first_chars = discussion['discussion_name'][0:string_length].lower()
+        if search_input == first_chars:
+            matched_discussions.append(discussion)
+    return response.json(list(matched_discussions))
+
 @auth.requires_signature()
 def add_discussion():
     db.discussions.update_or_insert((db.discussions.discussion_id == request.vars.discussion_id),
