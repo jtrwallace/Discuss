@@ -56,7 +56,6 @@
             {{=A('Sign In', _class='btn', _id='signin-button', _href=URL('default', 'user', args=['login'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
         {{pass}}
         {{if auth.is_logged_in():}}
-            {{=A('My Profile', _class='btn', _id='myprofile-button', _href=URL('default', 'profile'))}}
             {{=A('Sign Out', _class='btn', _id='signout-button', _href=URL('default', 'user', args=['logout'], vars=dict(_next=URL('default'))))}}
         {{pass}}
         </div>

@@ -66,7 +66,6 @@
             {{=A('Sign In', _class='btn', _id='signin-button', _href=URL('default', 'user', args=['login'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
         {{pass}}
         {{if auth.is_logged_in():}}
-            {{=A('My Profile', _class='btn', _id='myprofile-button', _href=URL('default', 'user', args=['register'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
             {{=A('Sign Out', _class='btn', _id='signout-button', _href=URL('default', 'user', args=['logout'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
         {{pass}}
         </div>
@@ -108,6 +107,7 @@
 			<div id="forum-heading-views" class="forum-heading views">Views</div>
 			<div id="forum-heading-last-post" class="forum-heading last-post">Last Post</div>
 		</div>
+		{% #if number_of_posts > 0 %}
 		{% #posts_list %}
 			{% #if is_draft === false %}
 				<div id="forum-post" class="flex-row center-aligned single-forum-post">
@@ -125,18 +125,14 @@
 			{% /if %}
             {% #if is_draft === true %}
                 <div id="forum-post-draft" class="flex-column single-forum-post">
-                    <div id="forum-post-draft-title-label>Title</div>
-                    {% #if post_id === latest_post_id %}
+                    <div id="forum-post-draft-title-label">Title</div>
                     <input type="text" class="forum-post-draft-title" id="focus_input" name="new_board_name" value="{% active_draft_name %}" maxlength="40" data-postid="{% post_id %}" on-blur="loses-focus" on-focus="gains-focus" />
-                    {% /if %}
-                    {% #if post_id !== latest_post_id %}
-                    <input type="text" class="forum-post-draft-title" name="new_board_name" value="{% active_draft_name %}" maxlength="40" data-postid="{% post_id %}" on-blur="loses-focus" on-focus="gains-focus" />
-                    {% /if %}
-                    <div id="forum-post-draft-content-label>Content</div>
-                    <textarea name="new_post_content" class="post_draft_content" value="{% active_draft_content %}" cols="37" rows="2" on-blur="loses-focus" data-postid="{% post_id %}" on-focus="gains-focus"></textarea>
+                    <div id="forum-post-draft-content-label">Content</div>
+					<textarea name="new_draft_content" class="post_draft_content" value="{% active_draft_content %}" cols="37" rows="2" on-blur="loses-focus" data-postid="{% post_id %}" on-focus="gains-focus"></textarea>
                 </div>
             {% /if %}
 		{% /posts_list %}
+		{% /if %}
 	</div>
 	{% #if number_of_posts === 0 %}
         <div class="no_posts">
@@ -368,7 +364,6 @@
 						method: 'POST',
 						success: function (data) {
 							MEMBERS.set('members', data);
-							console.log(data);
 							set_members_active();
 						}
 					}
@@ -487,6 +482,7 @@
 		//Reset the DISCUSS posts list.
 		function set_DISCUSS_list(list) {
 			DISCUSS.set('posts_list', list);
+			DISCUSS.set('number_of_posts', list.length)
 		}
 
 		//Moves the cursor to the specified element in a specific post.
@@ -496,7 +492,7 @@
 		}
 
 		function become_member() {
-			$.ajax("{{=URL('default', 'become_member')}}",
+			$.ajax("{{=URL('default', 'become_member', user_signature=True)}}",
 					{
 						data: {
 							discussion_id: "{{=discussion_id}}" //request.vars.discussion_id
@@ -511,7 +507,7 @@
 		}
 
 		function remove_member() {
-			$.ajax("{{=URL('default', 'remove_member')}}",
+			$.ajax("{{=URL('default', 'remove_member', user_signature=True)}}",
 					{
 						data: {
 							discussion_id: "{{=discussion_id}}" //request.vars.discussion_id
@@ -616,11 +612,7 @@
 			var posts_list = DISCUSS.get('posts_list');
 			//Add a new post to the posts_list with a unique UUID. Not sending this to the server yet.
 			var new_draft_post = create_draft_post_object();
-			if (typeof(posts_list) === 'undefined') {
-				posts_list[0] = new_draft_post;
-			} else {
-				posts_list.push(new_draft_post);
-			}
+			posts_list.push(new_draft_post);
 			if (posts_list.length > 1) {
 				sort_list_by_date(posts_list, 'last_reply_time', set_DISCUSS_list);
 			} else {
@@ -670,4 +662,3 @@
 	});
 </script>
 
-</html>

@@ -60,11 +60,13 @@ def discussion():
         is_member = "true"
     return locals()
 
+@auth.requires_signature()
 def become_member():
     discussion = db(db.discussions.discussion_id == request.vars.discussion_id).select().first()
     db.membership.insert(discussion=discussion['id'], user_table=auth.user_id)
     return "ok"
 
+@auth.requires_signature()
 def remove_member():
     discussion = db(db.discussions.discussion_id == request.vars.discussion_id).select().first()
     db(db.membership.discussion==discussion['id'], db.membership.user_table==auth.user_id).delete()
