@@ -97,10 +97,8 @@
 		{% #replies_list %}
 			{% #if is_draft === false %}
 				<div id="reply-post" class="flex-row center-aligned single-forum-post">
-					<div id="reply-post-title-content-container" class="flex-column">
-						<div id="reply-post-content"><p>{% reply_content %}</p></div>
-					</div>
-					<div id="reply-post-rest-container" class="flex-column">
+					<div id="reply-post-content"><p>{% reply_content %}</p></div>
+					<div id="reply-post-rest-container" class="flex-column center-aligned">
 						<div id="reply-post-time" class="reply-div">{% reply_time_pretty %}</div>
 						<div id="reply-post-author" class="reply-div">{% reply_author_name %}</div>
 					</div>
@@ -108,7 +106,7 @@
 				<button class="btn blue-button" id="post-reply-button" on-click="new-reply-button" data-replyid="{% reply_id %}">Post Reply</button>
 			{% /if %}
             {% #if is_draft === true %}
-                <div id="reply-post" class="flex-row center-aligned single-forum-post">
+                <div id="reply-post-draft" class="flex-row center-aligned single-forum-post">
 					<div id="reply-post-title-content-container" class="flex-column">
 						<textarea name="new_reply_content" class="reply-post_draft_content form-control" value="{% active_draft_content %}" cols="70" rows="8" on-blur="loses-focus" data-replyid="{% reply_id %}" on-focus="gains-focus"></textarea>
 					</div>
@@ -411,8 +409,9 @@
 			if ($.trim(reply['reply_content']).length > 0) {
 				//Set its fields for inclusion as a permanent post.
 				var prepared_reply = prepare_saved_reply_object(reply);
+				console.log("prepared");
 				//Put that altered reply back into the local replies_list
-				replies_list[reply_list_index] = prepared_post;
+				replies_list[reply_list_index] = prepared_reply;
 				sort_list_by_date(replies_list, 'last_reply_time', set_MAIN_list);
 				//Then send it to the server.
 				send_record(prepared_reply);

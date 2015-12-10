@@ -775,8 +775,30 @@ textarea.post_draft_content.form-control {
 }
 
 /* line 675, ../sass/_main.scss */
-#reply-post {
+#reply-post-draft {
   height: 200px;
   width: 100%;
   padding-left: 10%;
+}
+
+/* line 681, ../sass/_main.scss */
+#reply-post {
+  height: 125px;
+  width: 100%;
+  padding-left: 10%;
+}
+
+/* line 687, ../sass/_main.scss */
+#reply-post-content {
+  width: 85%;
+}
+
+/* line 691, ../sass/_main.scss */
+#reply-post-rest-container {
+  width: 15%;
+}
+
+/* line 695, ../sass/_main.scss */
+.reply-div {
+  margin: 15px;
 }

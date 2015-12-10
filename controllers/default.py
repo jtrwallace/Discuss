@@ -148,11 +148,11 @@ def load_replies():
 
 def add_reply():
     if len(request.vars.post_id) == 36:
-        post = db(db.posts.discussion_id == request.vars.post_id).select().first()
+        post = db(db.posts.post_id == request.vars.post_id).select().first()
     else:
         post = db(db.posts.id == request.vars.post_id).select().first()
     reply_author_name = auth.user.first_name + " " + auth.user.last_name
-    db.posts.update_or_insert((db.replies.reply_id == request.vars.reply_id),
+    db.replies.update_or_insert((db.replies.reply_id == request.vars.reply_id),
             reply_id=request.vars.reply_id,
             reply_title=request.vars.reply_title,
             reply_author_name=reply_author_name,

@@ -672,8 +672,26 @@ textarea.post_draft_content.form-control {
   min-height: 50px;
 }
 
-#reply-post {
+#reply-post-draft {
   height: 200px;
   width: 100%;
   padding-left: 10%;
+}
+
+#reply-post {
+  height: 125px;
+  width: 100%;
+  padding-left: 10%;
+}
+
+#reply-post-content {
+  width: 85%;
+}
+
+#reply-post-rest-container {
+  width: 15%;
+}
+
+.reply-div {
+  margin: 15px;
 }
