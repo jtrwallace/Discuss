@@ -632,6 +632,7 @@ textarea.post_draft_content.form-control {
   width: 80%;
   margin: auto;
   font-family: 'Lato', sans-serif;
+  white-space: pre-line;
 }
 
 #original-post {
@@ -652,7 +653,8 @@ textarea.post_draft_content.form-control {
   font-size: 19pt;
 }
 
-#original-post-content p {
+#original-post-content {
+  max-height: 100px;
   overflow: scroll;
 }
 
@@ -686,6 +688,8 @@ textarea.post_draft_content.form-control {
 
 #reply-post-content {
   width: 85%;
+  height: 100px;
+  overflow: scroll;
 }
 
 #reply-post-rest-container {
