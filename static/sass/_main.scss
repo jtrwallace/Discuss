@@ -470,6 +470,40 @@ h1, h2, h3, h4, h5, h6 {
   border-top-color: #0097FF;
 }
 
+#members-heading-container {
+  width: 80%;
+  height: 50px;
+  background-color: #E3F1FF;
+  padding: 0px 15px 0px 15px;
+  border-top-style: solid;
+  border-top-width: 7px;
+  border-top-color: #0097FF;
+}
+
+#members-heading-name {
+  width: 50%;
+}
+
+#member-name {
+  width: 50%;
+}
+
+#members-heading-age {
+  width: 10%;
+}
+
+#member-age {
+  width: 10%;
+}
+
+#members-heading-location {
+  width: 40%;
+}
+
+#member-location {
+  width: 40%;
+}
+
 .forum-heading {
   font-size: 15pt;
   font-family: 'Montserrat', sans-serif;
@@ -496,6 +530,29 @@ h1, h2, h3, h4, h5, h6 {
 #forum-post {
   width: 80%;
   height: 70px;
+  padding: 0px 15px 0px 15px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #424242;
+  font-family: 'Lato', sans-serif;
+  font-size: 15pt;
+}
+
+#member {
+  width: 80%;
+  height: 40px;
+  padding: 0px 15px 0px 15px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #424242;
+  font-family: 'Lato', sans-serif;
+  font-size: 15pt;
+  margin: auto;
+}
+
+#forum-post-draft {
+  width: 80%;
+  height: 150px;
   padding: 0px 15px 0px 15px;
   border-top-style: solid;
   border-top-width: 1px;
@@ -538,4 +595,9 @@ h1, h2, h3, h4, h5, h6 {
   border-top-style: solid;
   border-top-width: 1px;
   border-top-color: #424242;
+}
+
+#calendar {
+  width: 80%;
+  margin: auto;
 }

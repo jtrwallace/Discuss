@@ -41,6 +41,7 @@ db.define_table('posts',
     Field('posting_time_pretty', 'string', default=""),
     Field('last_reply_author', db.auth_user, default=auth.user_id),
     Field('last_reply_time', 'string', default=""),
+    Field('last_reply_time_pretty', 'string', default=""),
     Field('discussion_id', "reference discussions"),
     Field('post_id'),
     Field('is_draft', 'boolean', default=False)

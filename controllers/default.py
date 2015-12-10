@@ -68,6 +68,14 @@ def load_posts():
     discussion_posts = my_drafts.select() | all_completed_posts.select()
     return response.json(list(discussion_posts))
 
+def load_members():
+    discussion = db(db.discussions.discussion_id == request.vars.discussion_id).select().first()
+    records = db(db.membership.discussion==discussion['id']).select()
+    members = []
+    for record in records:
+        members.append(db(db.auth_user.id == record['user_table']).select().first())
+    return response.json(list(members))
+
 def user():
     """
     exposes:
