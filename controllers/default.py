@@ -30,9 +30,9 @@ def load_single_discussion():
 def add_discussion():
     db.discussions.update_or_insert((db.discussions.discussion_id == request.vars.discussion_id),
             discussion_id=request.vars.discussion_id,
-            discussion_name=request.vars.discussion_name,
-            discussion_description=request.vars.discussion_description,
-            discussion_location=request.vars.discussion_location,
+            discussion_name=request.vars.discussion_name.title(),
+            discussion_description=request.vars.discussion_description.capitalize(),
+            discussion_location=request.vars.discussion_location.title(),
             banner_photo_url=request.vars.banner_photo_url,
             discussion_last_updated=request.vars.discussion_last_updated,
             discussion_pretty_updated=request.vars.discussion_pretty_updated

@@ -38,7 +38,12 @@
 </head>
 <body>
 	<div id="wrap">
-		<div id="discussion-target" class="content-wrapper"></div>
+		<div class="content-wrapper">
+			<div id="discussion-target" class="content-wrapper"></div>
+			<div id="discussion-forum-target"></div>
+			<div id="discussion-calendar-target"></div>
+			<div id="discussion-members-target"></div>
+		</div>
 	</div>
 	<footer><div class="orange-bar"></div></footer>
 	<!-- The javascript =============================== -->
@@ -70,34 +75,90 @@
 			</div>
 		</div>
 		<div id="discussion-nav-container" class="flex-row space-around center-aligned">
-			<button class="btn discussion-btn" id="discuss-button" on-click="discuss-button">Discuss</button>
-			<button class="btn discussion-btn" id="calendar-button" on-click="calendar-button">Calendar</button>
-			<button class="btn discussion-btn" id="members-button" on-click="members-button">Members</button>
+			<button class="{% discuss_button_class %}" id="discuss-button" on-click="discuss-button">Discuss</button>
+			<button class="{% calendar_button_class %}" id="calendar-button" on-click="calendar-button">Calendar</button>
+			<button class="{% members_button_class %}" id="members-button" on-click="members-button">Members</button>
 		</div>
 	</main>
+</script>
+
+<script id="discussion-forum-template" type="text/ractive">
+
+</script>
+
+<script id="discussion-calendar-template" type="text/ractive">
+
+</script>
+
+<script id="discussion-members-template" type="text/ractive">
+
 </script>
 
 <script>
 	$(function() {
 		// Ractive object
-		var BODY = new Ractive({
+		var MAIN = new Ractive({
 			el: '#discussion-target',
 			template: '#discussion-template',
 			delimiters: ['{%', '%}'],
 			tripleDelimiters: ['{%%', '%%}'],
 			data: {
 				posts_list: [],
-				discussion: ""
+				discussion: "",
+				discuss_button_class: "btn discussion-btn-active",
+				calendar_button_class: "btn discussion-btn",
+				members_button_class: "btn discussion-btn"
 			}
 		});
-
+		
+		var DISCUSS = new Ractive({
+			el: '#discussion-forum-target',
+			template: '#discussion-forum-template',
+			delimiters: ['{%', '%}'],
+			tripleDelimiters: ['{%%', '%%}'],
+			data: {
+				posts_list: [],
+				discussion: "",
+				discuss_button_class: "btn discussion-btn-active",
+				calendar_button_class: "btn discussion-btn",
+				members_button_class: "btn discussion-btn"
+			}
+		});
+		
+		var CALENDAR = new Ractive({
+			el: '#discussion-calendar-target',
+			template: '#discussion-calendar-template',
+			delimiters: ['{%', '%}'],
+			tripleDelimiters: ['{%%', '%%}'],
+			data: {
+				posts_list: [],
+				discussion: "",
+				discuss_button_class: "btn discussion-btn-active",
+				calendar_button_class: "btn discussion-btn",
+				members_button_class: "btn discussion-btn"
+			}
+		});
+		
+		var MEMBERS = new Ractive({
+			el: '#discussion-members-target',
+			template: '#discussion-members-template',
+			delimiters: ['{%', '%}'],
+			tripleDelimiters: ['{%%', '%%}'],
+			data: {
+				posts_list: [],
+				discussion: "",
+				discuss_button_class: "btn discussion-btn-active",
+				calendar_button_class: "btn discussion-btn",
+				members_button_class: "btn discussion-btn"
+			}
+		});
 
 		function load_posts() {
 			$.ajax("{{=URL('default', 'load_discussions')}}",
 					{
 						method: 'POST',
 						success: function (data) {
-							sort_list_by_date(data, 'post_last_updated', set_BODY_list);
+							sort_list_by_date(data, 'post_last_updated', set_DISCUSS_list);
 						}
 					}
 			);
@@ -112,10 +173,19 @@
 						},
 						method: 'POST',
 						success: function (data) {
-							BODY.set('discussion', data);
+							MAIN.set('discussion', data);
+							set_discuss_active();
 						}
 					}
 			);
+
+		}
+
+		function load_calendar() {
+
+		}
+
+		function load_members() {
 
 		}
 
@@ -128,13 +198,27 @@
 		}
 
 		function set_discuss_active() {
-			var element = document.getElementById("discuss-button");
+			MAIN.set('discuss_button_class', "btn discussion-btn-active");
+			MAIN.set('calendar_button_class', "btn discussion-btn");
+			MAIN.set('members_button_class', "btn discussion-btn");
+		}
+
+		function set_calendars_active() {
+			MAIN.set('discuss_button_class', "btn discussion-btn");
+			MAIN.set('calendar_button_class', "btn discussion-btn-active");
+			MAIN.set('members_button_class', "btn discussion-btn");
+		}
+
+		function set_members_active() {
+			MAIN.set('discuss_button_class', "btn discussion-btn");
+			MAIN.set('calendar_button_class', "btn discussion-btn");
+			MAIN.set('members_button_class', "btn discussion-btn-active");
 		}
 
 		load_discussion();
 		load_posts();
 
-		//Sort the posts based on the last_updated field and update the BODY list.
+		//Sort the posts based on the last_updated field and update the MAIN list.
 		function sort_list_by_date(data, field, callback) {
 			if (data.length > 1) {
 				data.sort(function (a, b) {
@@ -146,10 +230,12 @@
 			callback(data);
 		}
 
-		//Reset the MAIN boards list.
-		function set_BODY_list(list) {
-			BODY.set('posts_list', list);
+		//Reset the DISCUSS posts list.
+		function set_DISCUSS_list(list) {
+			DISCUSS.set('posts_list', list);
 		}
+
+
 
 	});
 </script>

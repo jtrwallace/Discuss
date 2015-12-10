@@ -43,7 +43,7 @@
 		{{=A('Discuss', _class='title', _href=URL('default', 'index'))}}
 		<div class="nav-buttons flex-row space-around">
 		{{if not auth.is_logged_in():}}
-			{{=A('Get Started', _class='btn', _id='signup-button', _href=URL('default', 'user', args=['register'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
+			{{=A('Get Started', _class='btn', _id='signup-button', _href=URL('default', 'user', args=['register'], vars=dict(_next=URL('default', 'index'))))}}
             {{=A('Sign In', _class='btn', _id='signin-button', _href=URL('default', 'user', args=['login'], vars=dict(_next=URL(args=request.args, vars=request.vars))))}}
         {{pass}}
         {{if auth.is_logged_in():}}

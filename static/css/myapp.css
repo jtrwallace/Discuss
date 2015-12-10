@@ -417,42 +417,43 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* line 370, ../sass/_main.scss */
-.discussion-active-btn {
+.discussion-btn-active {
+  background-color: #0097FF;
+  color: white;
+  width: 25%;
+  font-size: 22pt;
+}
+
+/* line 377, ../sass/_main.scss */
+.discussion-btn-active:hover {
   background-color: #0097FF;
   color: white;
   font-size: 22pt;
 }
 
-/* line 376, ../sass/_main.scss */
-.discussion-active-btn:hover {
-  background-color: #0097FF;
-  color: white;
-  font-size: 22pt;
-}
-
-/* line 382, ../sass/_main.scss */
+/* line 383, ../sass/_main.scss */
 .blue-button {
   background-color: #0097FF;
   color: white;
   margin: auto;
 }
 
-/* line 388, ../sass/_main.scss */
+/* line 389, ../sass/_main.scss */
 .blue-button:hover {
   color: #424242;
 }
 
-/* line 392, ../sass/_main.scss */
+/* line 393, ../sass/_main.scss */
 #submit-button {
   margin-top: 10px;
 }
 
-/* line 396, ../sass/_main.scss */
+/* line 397, ../sass/_main.scss */
 #register-form {
   padding-top: 0px;
 }
 
-/* line 400, ../sass/_main.scss */
+/* line 401, ../sass/_main.scss */
 #new-discussion-greeting h1 {
   margin-top: 10px;
 }
