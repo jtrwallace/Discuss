@@ -55,8 +55,8 @@
     <script src="{{=URL('static', 'fullcalendar-2.5.0/fullcalendar.min.js')}}"></script>
 </body>
 
-<script id="discussion-template" type="text/ractive">
-	<nav id="discussion-nav" class="flex-row space-between full-width center-aligned">
+<script id="post-template" type="text/ractive">
+	<nav id="post-nav" class="flex-row space-between full-width center-aligned">
 		{{=A('Discuss', _class='title', _href=URL('default', 'index'))}}
 		<div class="nav-buttons flex-row space-around">
 		{{if not auth.is_logged_in():}}
@@ -68,7 +68,7 @@
         {{pass}}
         </div>
 	</nav>
-	<main id="discussion-main">
+	<main id="post-main">
 		<div class="banner-photo">
 			<img src="{% discussion['banner_photo_url'] %}" alt="Bicycle Commuter">
 			<div id="discussion-greeting" class="banner-content">
@@ -76,170 +76,89 @@
 				<div class="banner-text">{% discussion['discussion_description'] %}</div>
 			</div>
 		</div>
-		<div id="discussion-nav-container">
-			<div id="join-or-post-container" class="{% join_or_post_container_class %}">
-				{{if auth.is_logged_in():}}
-					{% #if is_member %}
-						<button class="btn blue-button" id="post-button" on-click="new-post-button">New Post</button>
-						<button class="btn" id="leave-button" on-click="leave-button">Leave Discussion</button>
-					{% /if %}
-					{% #if is_not_member %}
-						<button class="btn blue-button" id="join-button" on-click="join-button">Join Discussion</button>
-					{% /if %}
-				{{pass}}
-			</div>
-			<div id="discussion-nav-options" class="flex-row space-around center-aligned">
-				<button class="{% discuss_button_class %}" id="discuss-button" on-click="discuss-button">Discuss</button>
-				<button class="{% calendar_button_class %}" id="calendar-button" on-click="calendar-button">Calendar</button>
-				<button class="{% members_button_class %}" id="members-button" on-click="members-button">Members</button>
-			</div>
-		</div>
 	</main>
-</script>
-
-<script id="discussion-forum-template" type="text/ractive">
-	<div id="forum-container" class="flex-column center-aligned">
-		<div id="forum-heading-container" class="flex-row center-aligned space-between">
-			<div id="forum-heading-topic" class="forum-heading topic">Topic</div>
-			<div id="forum-heading-replies" class="forum-heading replies">Replies</div>
-			<div id="forum-heading-views" class="forum-heading views">Views</div>
-			<div id="forum-heading-last-post" class="forum-heading last-post">Last Post</div>
+	<div id="post-container" class="flex-column center-aligned">
+		<div id="original-post" class="flex-row center-aligned single-forum-post">
+			<div id="original-post-title-content-container" class="flex-column">
+				<div id="original-post-title">{% post['post_title'] %}</div>
+				<div id="original-post-content">{% post['post_content'] %}</div>
+			</div>
+			<div id="original-post-rest-container" class="flex-column center-aligned">
+				<div id="original-post-time" class="rest-div">{% post['posting_time_pretty'] %}</div>
+				<div id="original-post-author" class="rest-div">{% post['post_author_name'] %}</div>
+				<div id="original-post-views" class="rest-div">Views: {% post['post_views'] %}</div>
+				<div id="original-post-replies" class="rest-div">Replies: {% post['post_replies'] %}</div>
+			</div>
 		</div>
-		{% #if number_of_posts > 0 %}
-		{% #posts_list %}
+		{% #if number_of_replies == 0 %}
+		<button class="btn blue-button" id="post-reply-button" on-click="new-reply-button" data-replyid="{% reply_id %}">Post Reply</button>
+			{% /if %}
+		{% #if number_of_replies > 0 %}
+		{% #replies_list %}
 			{% #if is_draft === false %}
-				<div id="forum-post" class="flex-row center-aligned single-forum-post">
-					<div id="forum-post-subject-author-container" class="flex-column topic">
-						<div id="forum-post-subject">{% post_title %}</div>
-						<div id="forum-post-author-and-date">by {% post_author_name %} on {% posting_time_pretty %}</div>
+				<div id="reply-post" class="flex-row center-aligned single-forum-post">
+					<div id="reply-post-title-content-container" class="flex-column">
+						<div id="reply-post-content"><p>{% reply_content %}</p></div>
 					</div>
-					<div id="forum-post-replies" class="replies">{% post_replies %}</div>
-					<div id="forum-post-views" class="views">{% post_views %}</div>
-					<div id="forum-post-last-post-container" class="flex-column last-post">
-						<div id="forum-post-last-post-author">by {% last_reply_author_name %}</div>
-						<div id="forum-post-last-post-date">on {% last_reply_time %}</div>
+					<div id="reply-post-rest-container" class="flex-column">
+						<div id="reply-post-time" class="reply-div">{% reply_time_pretty %}</div>
+						<div id="reply-post-author" class="reply-div">{% reply_author_name %}</div>
 					</div>
 				</div>
+				<button class="btn blue-button" id="post-reply-button" on-click="new-reply-button" data-replyid="{% reply_id %}">Post Reply</button>
 			{% /if %}
             {% #if is_draft === true %}
-                <div id="forum-post-draft" class="flex-row single-forum-post space-between">
-                    <div id="form-post-draft-container">
-                        <div id="forum-post-draft-title-label">Title</div>
-                        <input type="text" class="forum-post-draft-title form-control" id="focus_input" name="new_board_name" value="{% active_draft_title %}" maxlength="40" data-postid="{% post_id %}" on-blur="loses-focus" on-focus="gains-focus" />
-                        <div id="forum-post-draft-content-label">Content</div>
-						<textarea name="new_draft_content" class="post_draft_content form-control" value="{% active_draft_content %}" cols="37" rows="2" on-blur="loses-focus" data-postid="{% post_id %}" on-focus="gains-focus"></textarea>
+                <div id="reply-post" class="flex-row center-aligned single-forum-post">
+					<div id="reply-post-title-content-container" class="flex-column">
+						<textarea name="new_reply_content" class="reply-post_draft_content form-control" value="{% active_draft_content %}" cols="70" rows="8" on-blur="loses-focus" data-replyid="{% reply_id %}" on-focus="gains-focus"></textarea>
 					</div>
-					<div id="save-button-container">
-						<button class="btn save_button_class blue-button" id="save-button" data-postid="{% post_id %}" on-click="save-post-button">Save</button>
-					</div>
-                </div>
+					<button class="btn blue-button" id="save-reply-button" on-click="save-reply-button" data-replyid="{% reply_id %}">Save Reply</button>
+				</div>
+				<button class="btn blue-button" id="post-reply-button" on-click="new-reply-button" data-replyid="{% reply_id %}">Post Reply</button>
             {% /if %}
-		{% /posts_list %}
+		{% /replies_list %}
 		{% /if %}
-	</div>
-	{% #if number_of_posts === 0 %}
-        <div class="no_posts">
-            {{if auth.is_logged_in():}}
-            <p>No posts yet!<br>Click <b>New Post</b> above to be the first!</p>
-            {{else:}}
-            <p>No posts yet!<br><b>Log in</b> or create an account above to be the first!</p>
-            {{pass}}
-        </div>
-    {% /if %}
-</script>
-
-<script id="discussion-calendar-template" type="text/ractive">
-	<div id="calendar"></div>
-</script>
-
-<script id="discussion-members-template" type="text/ractive">
-	<div id="members-container" class="flex-column center-aligned">
-		<div id="members-heading-container" class="flex-row center-aligned space-between">
-			<div id="members-heading-name" class="forum-heading">Name</div>
-			<div id="members-heading-age" class="forum-heading">Age</div>
-			<div id="members-heading-location" class="forum-heading">Location</div>
 		</div>
-	</div>
-	{% #members %}
-		<div id="member" class="flex-row center-aligned single-forum-post">
-			<div id="member-name">{% first_name %} {% last_name %}</div>
-			<div id="member-age">{% age %}</div>
-			<div id="member-location">{% city %}</div>
-		</div>
-	{% /members %}
 </script>
 
 <script>
 	$(function() {
 		// Ractive object
 		var MAIN = new Ractive({
-			el: '#discussion-target',
-			template: '#discussion-template',
+			el: '#post-target',
+			template: '#post-template',
 			delimiters: ['{%', '%}'],
 			tripleDelimiters: ['{%%', '%%}'],
 			data: {
+				post: "",
 				discussion: "",
-				discuss_button_class: "btn discussion-btn-active",
-				calendar_button_class: "btn discussion-btn",
-				members_button_class: "btn discussion-btn",
-				join_or_post_container_class: "flex-row space-around center-aligned join",
+				replies_list: [],
 				is_member: false,
-				is_not_member: true
+				is_not_member: true,
+				number_of_replies: 0
 			}
 		});
 
-		var DISCUSS = new Ractive({
-			el: '#discussion-forum-target',
-			template: '#discussion-forum-template',
-			delimiters: ['{%', '%}'],
-			tripleDelimiters: ['{%%', '%%}'],
-			data: {
-				posts_list: [],
-				number_of_posts: 0,
-				latest_post_id: ""
-			}
-		});
-
-		var CALENDAR = new Ractive({
-			el: '#discussion-calendar-target',
-			template: '#discussion-calendar-template',
-			delimiters: ['{%', '%}'],
-			tripleDelimiters: ['{%%', '%%}'],
-			data: {
-
-			}
-		});
-
-		var MEMBERS = new Ractive({
-			el: '#discussion-members-target',
-			template: '#discussion-members-template',
-			delimiters: ['{%', '%}'],
-			tripleDelimiters: ['{%%', '%%}'],
-			data: {
-				members: []
-			}
-		});
-
-		function load_posts() {
-			$.ajax("{{=URL('default', 'load_posts')}}",
+		function load_replies() {
+			$.ajax("{{=URL('default', 'load_replies')}}",
 					{
 						data: {
-							discussion_id: "{{=discussion_id}}" //request.vars.discussion_id
+							post_id: "{{=post_id}}" //request.vars.post_id
 						},
 						method: 'POST',
 						success: function (data) {
 							if (data.length > 0 && typeof data !== 'undefined') {
-								var posts_list = DISCUSS.get('posts_list');
-								if (posts_list.length > 0) {
-									var new_list = posts_list;
+								var replies_list = MAIN.get('replies_list');
+								if (replies_list.length > 0) {
+									var new_list = replies_list;
 									var has_match = false;
 									for (var i = 0; i < data.length; i += 1) {
-										for (var j = 0; j < posts_list.length; j += 1) {
-											if (hasValue(posts_list[j], 'post_id', data[i]['post_id'])) {
+										for (var j = 0; j < replies_list.length; j += 1) {
+											if (hasValue(replies_list[j], 'reply_id', data[i]['reply_id'])) {
 												has_match = true;
 												new_list[j] = data[i];
 											}
-											if (j == posts_list.length) {
+											if (j == replies_list.length) {
 												if (has_match == false) {
 													new_list.push(data[i]);
 													has_match = false;
@@ -247,11 +166,11 @@
 											}
 										}
 									}
-									DISCUSS.set('number_of_posts', data.length);
-									sort_list_by_date(new_list, 'last_reply_time', set_DISCUSS_list);
+									MAIN.set('number_of_replies', data.length);
+									sort_list_by_date(new_list, 'reply_time', set_MAIN_list);
 								} else {
-									DISCUSS.set('number_of_posts', data.length);
-									sort_list_by_date(data, 'last_reply_time', set_DISCUSS_list);
+									MAIN.set('number_of_replies', data.length);
+									sort_list_by_date(data, 'reply_time', set_MAIN_list);
 								}
 							}
 						}
@@ -259,156 +178,79 @@
 			);
 		}
 
-		function load_discussion() {
+		function load_post() {
 			//Load the discussion information.
-			$.ajax("{{=URL('default', 'load_single_discussion')}}",
+			$.ajax("{{=URL('default', 'load_single_post')}}",
 					{
 						data: {
-							discussion_id: "{{=discussion_id}}" //request.vars.discussion_id
+							post_id: "{{=post_id}}" //request.vars.post_id
 						},
 						method: 'POST',
 						success: function (data) {
-							MAIN.set('discussion', data);
-							set_discuss_active();
+							MAIN.set('post', data);
 						}
 					}
 			);
 			if("{{=is_member}}" == "false") {
 				MAIN.set('is_member', false);
 				MAIN.set('is_not_member', true);
-				MAIN.set('join_or_post_container_class', "flex-row space-between center-aligned join")
 			} else {
 				MAIN.set('is_member', true);
 				MAIN.set('is_not_member', false);
-				MAIN.set('join_or_post_container_class', "flex-row space-between center-aligned new-leave")
 			}
 		}
 
-		function load_calendar() {
-			$(document).ready(function() {
-
-				$('#calendar').fullCalendar({
-					header: {
-						left: 'prev,next today',
-						center: 'title',
-						right: 'month,agendaWeek,agendaDay'
-					},
-					defaultDate: '2015-12-12',
-					editable: true,
-					eventLimit: true, // allow "more" link when too many events
-					events: [
-						{
-							title: 'All Day Event',
-							start: '2015-12-01'
-						},
-						{
-							title: 'Long Event',
-							start: '2015-12-07',
-							end: '2015-12-10'
-						},
-						{
-							id: 999,
-							title: 'Repeating Event',
-							start: '2015-12-09T16:00:00'
-						},
-						{
-							id: 999,
-							title: 'Repeating Event',
-							start: '2015-12-16T16:00:00'
-						},
-						{
-							title: 'Conference',
-							start: '2015-12-11',
-							end: '2015-12-13'
-						},
-						{
-							title: 'Meeting',
-							start: '2015-12-12T10:30:00',
-							end: '2015-12-12T12:30:00'
-						},
-						{
-							title: 'Lunch',
-							start: '2015-12-12T12:00:00'
-						},
-						{
-							title: 'Meeting',
-							start: '2015-12-12T14:30:00'
-						},
-						{
-							title: 'Happy Hour',
-							start: '2015-12-12T17:30:00'
-						},
-						{
-							title: 'Dinner',
-							start: '2015-12-12T20:00:00'
-						},
-						{
-							title: 'Birthday Party',
-							start: '2015-12-13T07:00:00'
-						},
-						{
-							title: 'Click for Google',
-							url: 'http://google.com/',
-							start: '2015-12-28'
-						}
-					]
-				});
-
-			});
-
-		}
-
-		function load_members() {
-			$.ajax("{{=URL('default', 'load_members')}}",
+		function load_discussion() {
+			//Load the discussion information.
+			$.ajax("{{=URL('default', 'load_discussion_from_post')}}",
 					{
 						data: {
-							discussion_id: "{{=discussion_id}}" //request.vars.discussion_id
+							post_id: "{{=post_id}}" //request.vars.post_id
 						},
 						method: 'POST',
 						success: function (data) {
-							MEMBERS.set('members', data);
-							set_members_active();
+							MAIN.set('discussion', data);
 						}
 					}
 			);
-
+			if("{{=is_member}}" == "false") {
+				MAIN.set('is_member', false);
+				MAIN.set('is_not_member', true);
+			} else {
+				MAIN.set('is_member', true);
+				MAIN.set('is_not_member', false);
+			}
 		}
+
 
 		function hasValue(obj, key, value) {
 			return obj.hasOwnProperty(key) && obj[key] === value;
 		}
 
-		//Creates an empty post with a new UUID.
-		function create_draft_post_object() {
+		//Creates an empty reply with a new UUID.
+		function create_draft_reply_object() {
 			return {
 				active_draft_content: "",
 				active_draft_title: "",
-				post_author: parseInt("{{=auth.user_id}}"),
-				post_content: "",
-				post_title: "",
-				discussion_id: "{{=discussion_id}}",
-				post_id: generateUUID(),
-				posting_time: get_UTC_String(),
-				posting_time_pretty: get_pretty_time(),
-				post_views: 0,
-				post_replies: 0,
-				last_reply_author: parseInt("{{=auth.user_id}}"),
-				last_reply_time: get_UTC_String(),
-				last_reply_time_pretty: get_pretty_time(),
+				reply_author: parseInt("{{=auth.user_id}}"),
+				reply_content: "",
+				reply_title: "",
+				post_id: "{{=post_id}}",
+				reply_id: generateUUID(),
+				reply_time: get_UTC_String(),
+				reply_time_pretty: get_pretty_time(),
 				is_draft: true
 			};
 		}
 
-		//Updates the time and draft status before becoming a real post and being sent to the server.
-		function prepare_saved_post_object(post) {
-			post['is_draft'] = false;
-			post['posting_time'] = get_UTC_String();
-			post['posting_time_pretty'] = get_pretty_time();
-			post['last_reply_time'] = get_UTC_String();
-			post['last_reply_time_pretty'] = get_pretty_time();
-			post['active_draft_title'] = "";
-			post['active_draft_content'] = "";
-			return post;
+		//Updates the time and draft status before becoming a real reply and being sent to the server.
+		function prepare_saved_reply_object(reply) {
+			reply['is_draft'] = false;
+			reply['reply_time'] = get_UTC_String();
+			reply['reply_time_pretty'] = get_pretty_time();
+			reply['active_draft_title'] = "";
+			reply['active_draft_content'] = "";
+			return reply;
 		}
 
 		//http://stackoverflow.com/questions/7176908/how-to-get-index-of-object-by-its-property-in-javascript
@@ -436,41 +278,15 @@
 		}
 
 		//Save the active draft to the real title and content.
-		function copy_active(post) {
-			post['post_title'] = post['active_draft_title'];
-			post['post_content'] = post['active_draft_content'];
-			return post;
+		function copy_active(reply) {
+			reply['reply_title'] = reply['active_draft_title'];
+			reply['reply_content'] = reply['active_draft_content'];
+			return reply;
 		}
 
-		function set_discuss_active() {
-			MAIN.set('discuss_button_class', "btn discussion-btn-active");
-			MAIN.set('calendar_button_class', "btn discussion-btn");
-			MAIN.set('members_button_class', "btn discussion-btn");
-			DISCUSS.resetTemplate('#discussion-forum-template');
-			CALENDAR.resetTemplate('');
-			MEMBERS.resetTemplate('');
-		}
-
-		function set_calendar_active() {
-			MAIN.set('discuss_button_class', "btn discussion-btn");
-			MAIN.set('calendar_button_class', "btn discussion-btn-active");
-			MAIN.set('members_button_class', "btn discussion-btn");
-			DISCUSS.resetTemplate('');
-			CALENDAR.resetTemplate('#discussion-calendar-template');
-			MEMBERS.resetTemplate('');
-		}
-
-		function set_members_active() {
-			MAIN.set('discuss_button_class', "btn discussion-btn");
-			MAIN.set('calendar_button_class', "btn discussion-btn");
-			MAIN.set('members_button_class', "btn discussion-btn-active");
-			DISCUSS.resetTemplate('');
-			CALENDAR.resetTemplate('');
-			MEMBERS.resetTemplate('#discussion-members-template');
-		}
-
+		load_post();
 		load_discussion();
-		load_posts();
+		load_replies();
 
 		//Sort the posts based on the last_updated field and update the MAIN list.
 		function sort_list_by_date(data, field, callback) {
@@ -484,96 +300,64 @@
 			callback(data);
 		}
 
-		//Reset the DISCUSS posts list.
-		function set_DISCUSS_list(list) {
-			DISCUSS.set('posts_list', list);
-			DISCUSS.set('number_of_posts', list.length)
+		//Reset the MAIN posts list.
+		function set_MAIN_list(list) {
+			MAIN.set('replies_list', list);
+			MAIN.set('number_of_replies', list.length)
 		}
 
 		//Moves the cursor to the specified element in a specific post.
-		function set_focus(post_id, element_id) {
-			MAIN.set('latest_post_id', post_id);
+		function set_focus(reply_id, element_id) {
+			MAIN.set('latest_post_id', reply_id);
 			document.getElementById(element_id).focus();
-		}
-
-		function become_member() {
-			$.ajax("{{=URL('default', 'become_member', user_signature=True)}}",
-					{
-						data: {
-							discussion_id: "{{=discussion_id}}" //request.vars.discussion_id
-						},
-						method: 'POST',
-						success: function (data) {
-							MAIN.set('is_member', true);
-							MAIN.set('is_not_member', false);
-						}
-					}
-			);
-		}
-
-		function remove_member() {
-			$.ajax("{{=URL('default', 'remove_member', user_signature=True)}}",
-					{
-						data: {
-							discussion_id: "{{=discussion_id}}" //request.vars.discussion_id
-						},
-						method: 'POST',
-						success: function (data) {
-							MAIN.set('is_member', false);
-							MAIN.set('is_not_member', true);
-						}
-					}
-			);
 		}
 
 		//Called every 5 seconds
 		function periodic() {
 			//Send
-			var posts_list = DISCUSS.get('posts_list');
+			var replies_list = MAIN.get('replies_list');
 			//Find the drafts and check if they've had any updates.
-			for (var i = 0; i < posts_list.length; i += 1) {
-				if(posts_list[i]['is_draft'] === true) {
-					var post = posts_list[i];
+			for (var i = 0; i < replies_list.length; i += 1) {
+				if(replies_list[i]['is_draft'] === true) {
+					var reply = replies_list[i];
 					//If the two fields differ
-					if (post['post_title'] !== post['active_draft_title'] || post['post_content'] !== post['active_draft_content']) {
+					if (reply['reply_title'] !== reply['active_draft_title'] || reply['reply_content'] !== reply['active_draft_content']) {
 						//If they differ such that there is no text now but there was before
-						if (($.trim(post['post_title']).length > 0 && $.trim(post['active_draft_title']).length === 0) && ($.trim(post['active_draft_content']).length === 0)) {
+						if (($.trim(reply['reply_content']).length > 0 && $.trim(reply['active_draft_content']).length === 0) && ($.trim(reply['active_draft_title']).length === 0)) {
 							//Then we know that this is a draft that was on the server and we should now delete it from the server but not from the local list.
-							post = copy_active(post);
-							sort_list_by_date(posts_list, 'last_reply_time', set_DISCUSS_list);
-							delete_record(post);
+							reply = copy_active(reply);
+							sort_list_by_date(replies_list, 'reply_time', set_MAIN_list);
+							delete_record(reply);
 						} else {
-							post = copy_active(post);
-							sort_list_by_date(posts_list, 'last_reply_time', set_DISCUSS_list);
-							send_record(post);
+							reply = copy_active(post);
+							sort_list_by_date(replies_list, 'reply_time', set_MAIN_list);
+							send_record(reply);
 						}
 					}
 				}
 			}
 			//Receive
-			load_posts();
+			load_replies();
 		}
 
 		//Simply sends a complete post to the controller.
-		function send_record(post) {
-			$.ajax("{{=URL('default', 'add_post', user_signature=True)}}",
+		function send_record(reply) {
+			$.ajax("{{=URL('default', 'add_reply', user_signature=True)}}",
 					{
 						data: {
-							post_title: post['post_title'], //request.vars.post_title
-							post_content: post['post_content'], //request.vars.post_content
-							is_draft: post['is_draft'], //request.vars.is_draft
-							post_id: post['post_id'], //request.vars.post_id
-							active_draft_content: post['active_draft_content'], //request.vars.active_draft_content
-							active_draft_title: post['active_draft_title'], //request.vars.active_draft_title
-							posting_time: post['posting_time'], //request.vars.posting_time
-							posting_time_pretty: post['posting_time_pretty'], //request.vars.posting_time_pretty
-							last_reply_time: post['last_reply_time'], //request.vars.last_reply_time
-							last_reply_time_pretty: post['last_reply_time_pretty'], //request.vars.last_reply_time_pretty
-							discussion_id: post['discussion_id']
+							reply_title: reply['reply_title'], //request.vars.reply_title
+							reply_content: reply['reply_content'], //request.vars.reply_content
+							is_draft: reply['is_draft'], //request.vars.is_draft
+							reply_id: reply['reply_id'], //request.vars.reply_id
+							active_draft_content: reply['active_draft_content'], //request.vars.active_draft_content
+							active_draft_title: reply['active_draft_title'], //request.vars.active_draft_title
+							reply_time: reply['reply_time'], //request.vars.reply_time
+							reply_time_pretty: reply['reply_time_pretty'], //request.vars.reply_time_pretty
+							post_id: reply['post_id']
 						},
 						method: 'POST',
 						success: function() {
-							load_posts();
+							load_replies();
 						},
 						error: function() {}
 					}
@@ -581,11 +365,11 @@
 		}
 
 		//Deletes a record by post_id
-		function delete_record(post) {
-			$.ajax("{{=URL('default', 'del_post', user_signature=True)}}",
+		function delete_record(reply) {
+			$.ajax("{{=URL('default', 'del_reply', user_signature=True)}}",
 					{
 						data: {
-							post_id: post['post_id'] // request.vars.post_id
+							reply_id: reply['reply_id'] // request.vars.reply_id
 						},
 						method: 'POST',
 						success: function() {},
@@ -594,68 +378,45 @@
 			);
 		}
 
-		MAIN.on("discuss-button", function(e) {
-			set_discuss_active();
-		});
-
-		MAIN.on("calendar-button", function(e) {
-			set_calendar_active();
-			load_calendar();
-		});
-
-		MAIN.on("members-button", function(e) {
-			set_members_active();
-			load_members();
-		});
-
-		MAIN.on("join-button", function(e) {
-			become_member();
-		});
-
-		MAIN.on("leave-button", function(e) {
-			remove_member();
-		});
-
-		//Create a new draft post when the New Post button is clicked.
-		MAIN.on("new-post-button", function(e) {
-			var posts_list = DISCUSS.get('posts_list');
-			//Add a new post to the posts_list with a unique UUID. Not sending this to the server yet.
-			var new_draft_post = create_draft_post_object();
-			posts_list.push(new_draft_post);
-			if (posts_list.length > 1) {
-				sort_list_by_date(posts_list, 'last_reply_time', set_DISCUSS_list);
+		//Create a new draft reply when the New Post button is clicked.
+		MAIN.on("new-reply-button", function(e) {
+			var replies_list = MAIN.get('replies_list');
+			//Add a new post to the replies_list with a unique UUID. Not sending this to the server yet.
+			var new_draft_reply = create_draft_reply_object();
+			replies_list.push(new_draft_reply);
+			console.log(new_draft_reply);
+			if (replies_list.length > 1) {
+				sort_list_by_date(replies_list, 'reply_time', set_MAIN_list);
 			} else {
-				set_DISCUSS_list(posts_list);
+				set_MAIN_list(replies_list);
 			}
 			//Set the focus to the newly created post.
-			set_focus(new_draft_post['post_id'], "focus_input");
+			set_focus(new_draft_reply['reply_id'], "focus_input");
 		});
 
-		//Save the post to the server when the Save Post button is clicked.
-		DISCUSS.on("save-post-button", function(e) {
-			console.log("1");
-			var posts_list = DISCUSS.get('posts_list');
+		//Save the reply to the server when the Save Post button is clicked.
+		MAIN.on("save-reply-button", function(e) {
+			var replies_list = MAIN.get('replies_list');
+			console.log(replies_list);
 			//Get the ID from the click.
 			var save_button = $(e.original.target);
-			var clicked_id = save_button.data('postid');
-			//Retrieve the specific post from the list.
-			console.log("2");
-			var post_list_index = findWithAttr(posts_list, 'post_id', clicked_id);
-			var post = posts_list[post_list_index];
-			post = copy_active(post);
+			var clicked_id = save_button.data('replyid');
+			//Retrieve the specific reply from the list.
+			var reply_list_index = findWithAttr(replies_list, 'reply_id', clicked_id);
+			console.log(reply_list_index);
+			var reply = replies_list[reply_list_index];
+			reply = copy_active(reply);
+			console.log(reply);
 			//If the post title isn't empty, then:
-			console.log("3");
-			if ($.trim(post['post_title']).length > 0) {
+			if ($.trim(reply['reply_content']).length > 0) {
 				//Set its fields for inclusion as a permanent post.
-				var prepared_post = prepare_saved_post_object(post);
-				//Put that altered post back into the local posts_list
-				posts_list[post_list_index] = prepared_post;
-				sort_list_by_date(posts_list, 'last_reply_time', set_DISCUSS_list);
+				var prepared_reply = prepare_saved_reply_object(reply);
+				//Put that altered reply back into the local replies_list
+				replies_list[reply_list_index] = prepared_post;
+				sort_list_by_date(replies_list, 'last_reply_time', set_MAIN_list);
 				//Then send it to the server.
-				console.log("4");
-				send_record(prepared_post);
+				send_record(prepared_reply);
 			} else {
-			console.log("5");
 				set_focus(clicked_id, "focus_input");
 			}
 		});
@@ -673,7 +434,7 @@
 			});
 		}
 
-		setInterval(periodic, 5000);
+		//setInterval(periodic, 5000);
 
 	});
 </script>

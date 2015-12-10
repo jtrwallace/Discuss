@@ -112,7 +112,7 @@
 			{% #if is_draft === false %}
 				<div id="forum-post" class="flex-row center-aligned single-forum-post">
 					<div id="forum-post-subject-author-container" class="flex-column topic">
-						<div id="forum-post-subject">{% post_title %}</div>
+						<div id="forum-post-subject"><a href="{% post_url + "/" + post_id %}">{% post_title %}</a></div>
 						<div id="forum-post-author-and-date">by {% post_author_name %} on {% posting_time_pretty %}</div>
 					</div>
 					<div id="forum-post-replies" class="replies">{% post_replies %}</div>
@@ -198,7 +198,8 @@
 			data: {
 				posts_list: [],
 				number_of_posts: 0,
-				latest_post_id: ""
+				latest_post_id: "",
+				post_url: "{{=URL('default', 'post')}}"
 			}
 		});
 		

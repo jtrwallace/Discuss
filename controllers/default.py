@@ -26,6 +26,11 @@ def load_single_discussion():
     discussion = db(db.discussions.discussion_id == request.vars.discussion_id).select().first()
     return response.json(discussion)
 
+def load_discussion_from_post():
+    post = db(db.posts.post_id == request.vars.post_id).select().first()
+    discussion = db(db.discussions.id == post['discussion_id']).select().first()
+    return response.json(discussion)
+
 def search_discussions():
     search_input = request.vars.search_input.lower()
     string_length = len(search_input)
@@ -103,10 +108,6 @@ def add_post():
             last_reply_author_name=post_author_name,
             discussion_id=discussion['id']
             )
-    db.discussions.update_or_insert((db.discussions.discussion_id == request.vars.discussion_id),
-            discussion_last_updated=request.vars.posting_time,
-            discussion_pretty_updated=request.vars.posting_time_pretty
-            )
     return "ok"
 
 @auth.requires_signature()
@@ -121,6 +122,53 @@ def load_members():
     for record in records:
         members.append(db(db.auth_user.id == record['user_table']).select().first())
     return response.json(list(members))
+
+def post():
+    post_id = request.args(0)
+    post = db(db.posts.post_id == post_id).select().first()
+    record = db.membership(discussion=post['discussion_id'], user_table=auth.user_id)
+    if not record:
+        is_member = "false"
+    else:
+        is_member = "true"
+    return locals()
+
+def load_single_post():
+    post = db(db.posts.post_id == request.vars.post_id).select().first()
+    return response.json(post)
+
+def load_replies():
+    post = db(db.posts.post_id == request.vars.post_id).select().first()
+    my_drafts_query = (db.replies.is_draft == True) & (db.replies.reply_author == auth.user_id) & (db.replies.post_id == post.id)
+    all_completed_replies_query = (db.replies.post_id == post.id) & (db.replies.is_draft == False)
+    my_drafts = db(my_drafts_query)
+    all_completed_replies = db(all_completed_replies_query)
+    post_replies = my_drafts.select() | all_completed_replies.select()
+    return response.json(list(post_replies))
+
+def add_reply():
+    if len(request.vars.post_id) == 36:
+        post = db(db.posts.discussion_id == request.vars.post_id).select().first()
+    else:
+        post = db(db.posts.id == request.vars.post_id).select().first()
+    reply_author_name = auth.user.first_name + " " + auth.user.last_name
+    db.posts.update_or_insert((db.replies.reply_id == request.vars.reply_id),
+            reply_id=request.vars.reply_id,
+            reply_title=request.vars.reply_title,
+            reply_author_name=reply_author_name,
+            reply_content=request.vars.reply_content,
+            is_draft=json.loads(request.vars.is_draft),
+            active_draft_content=request.vars.active_draft_content,
+            active_draft_title=request.vars.active_draft_title,
+            reply_time=request.vars.reply_time,
+            reply_time_pretty=request.vars.reply_time_pretty,
+            post_id=post['id']
+            )
+    return "ok"
+
+def del_reply():
+    db(db.replies.reply_id == request.vars.reply_id).delete()
+    return "ok"
 
 def user():
     """

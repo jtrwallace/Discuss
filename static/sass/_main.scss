@@ -625,3 +625,55 @@ textarea.post_draft_content.form-control {
   width: 80%;
   margin: auto;
 }
+
+#post-container {
+  position: relative;
+  top: -50px;
+  width: 80%;
+  margin: auto;
+  font-family: 'Lato', sans-serif;
+}
+
+#original-post {
+  margin: auto;
+  background-color: #E3E3E3;
+  height: 180px;
+  max-height: 150px;
+}
+
+#original-post-title-content-container {
+  width: 85%;
+  margin: auto;
+  padding: 10px 10px 10px 20px;
+}
+
+#original-post-title {
+  font-weight: 600;
+  font-size: 19pt;
+}
+
+#original-post-content p {
+  overflow: scroll;
+}
+
+#original-post-rest-container {
+  width: 15%;
+  margin: auto;
+}
+
+.rest-div {
+  margin: 5px;
+}
+
+#post-reply-button {
+  margin: auto;
+  height: 40px;
+  width: 100%;
+  min-height: 50px;
+}
+
+#reply-post {
+  height: 200px;
+  width: 100%;
+  padding-left: 10%;
+}

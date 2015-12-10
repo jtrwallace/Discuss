@@ -53,3 +53,17 @@ db.define_table('membership',
     Field('discussion', db.discussions),
     Field('user_table', db.auth_user)
     )
+
+db.define_table('replies',
+    Field('reply_author', db.auth_user, default=auth.user_id),
+    Field('reply_author_name', "string", default=""),
+    Field('reply_title', 'string', label='Title', length=40),
+    Field('active_draft_title', 'string', label='Title', length=40, default=""),
+    Field('reply_content', 'text', label='Content'),
+    Field('active_draft_content', 'string', label='Content', default=""),
+    Field('reply_time', 'string', default=""),
+    Field('reply_time_pretty', 'string', default=""),
+    Field('post_id', "reference posts"),
+    Field('reply_id'),
+    Field('is_draft', 'boolean', default=False)
+    )
