@@ -736,39 +736,40 @@ textarea.post_draft_content.form-control {
   background-color: #E3E3E3;
   height: 180px;
   max-height: 150px;
+  width: 100%;
 }
 
-/* line 645, ../sass/_main.scss */
+/* line 646, ../sass/_main.scss */
 #original-post-title-content-container {
   width: 85%;
   margin: auto;
   padding: 10px 10px 10px 20px;
 }
 
-/* line 651, ../sass/_main.scss */
+/* line 652, ../sass/_main.scss */
 #original-post-title {
   font-weight: 600;
   font-size: 19pt;
 }
 
-/* line 656, ../sass/_main.scss */
+/* line 657, ../sass/_main.scss */
 #original-post-content {
   max-height: 100px;
   overflow: scroll;
 }
 
-/* line 661, ../sass/_main.scss */
+/* line 662, ../sass/_main.scss */
 #original-post-rest-container {
   width: 15%;
   margin: auto;
 }
 
-/* line 666, ../sass/_main.scss */
+/* line 667, ../sass/_main.scss */
 .rest-div {
   margin: 5px;
 }
 
-/* line 670, ../sass/_main.scss */
+/* line 671, ../sass/_main.scss */
 #post-reply-button {
   margin: auto;
   height: 40px;
@@ -776,33 +777,33 @@ textarea.post_draft_content.form-control {
   min-height: 50px;
 }
 
-/* line 677, ../sass/_main.scss */
+/* line 678, ../sass/_main.scss */
 #reply-post-draft {
   height: 200px;
   width: 100%;
   padding-left: 10%;
 }
 
-/* line 683, ../sass/_main.scss */
+/* line 684, ../sass/_main.scss */
 #reply-post {
   height: 125px;
   width: 100%;
   padding-left: 10%;
 }
 
-/* line 689, ../sass/_main.scss */
+/* line 690, ../sass/_main.scss */
 #reply-post-content {
   width: 85%;
   height: 100px;
   overflow: scroll;
 }
 
-/* line 695, ../sass/_main.scss */
+/* line 696, ../sass/_main.scss */
 #reply-post-rest-container {
   width: 15%;
 }
 
-/* line 699, ../sass/_main.scss */
+/* line 700, ../sass/_main.scss */
 .reply-div {
   margin: 15px;
 }

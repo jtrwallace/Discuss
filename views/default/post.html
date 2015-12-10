@@ -42,7 +42,6 @@
 	<div id="wrap">
 		<div class="content-wrapper">
 			<div id="post-target"></div>
-			<div id="post-replies-target"></div>
 		</div>
 	</div>
 	<footer><div class="orange-bar"></div></footer>
@@ -53,6 +52,7 @@
     <script src="{{=URL('static', 'fullcalendar-2.5.0/lib/moment.min.js')}}"></script>
     <script src="{{=URL('static', 'fullcalendar-2.5.0/lib/jquery.min.js')}}"></script>
     <script src="{{=URL('static', 'fullcalendar-2.5.0/fullcalendar.min.js')}}"></script>
+
 </body>
 
 <script id="post-template" type="text/ractive">
@@ -91,7 +91,6 @@
 			</div>
 		</div>
 		{% #if number_of_replies == 0 %}
-		<button class="btn blue-button" id="post-reply-button" on-click="new-reply-button" data-replyid="{% reply_id %}">Post Reply</button>
 			{% /if %}
 		{% #if number_of_replies > 0 %}
 		{% #replies_list %}
