@@ -35,9 +35,18 @@ db.define_table('posts',
     Field('active_draft_title', 'string', label='Title', length=40, default=""),
     Field('post_content', 'text', label='Content'),
     Field('active_draft_content', 'string', label='Content', default=""),
+    Field('post_replies', 'integer', default=0),
+    Field('post_views', 'integer', default=0),
     Field('posting_time', 'string', default=""),
     Field('posting_time_pretty', 'string', default=""),
+    Field('last_reply_author', db.auth_user, default=auth.user_id),
+    Field('last_reply_time', 'string', default=""),
     Field('discussion_id', "reference discussions"),
     Field('post_id'),
     Field('is_draft', 'boolean', default=False)
+    )
+
+db.define_table('membership',
+    Field('discussion', db.discussions),
+    Field('user_table', db.auth_user)
     )

@@ -41,7 +41,32 @@ def add_discussion():
 
 def discussion():
     discussion_id = request.args(0)
+    discussion = db(db.discussions.discussion_id == discussion_id).select().first()
+    record = db.membership(discussion=discussion['id'], user_table=auth.user_id)
+    if not record:
+        is_member = "false"
+    else:
+        is_member = "true"
     return locals()
+
+def become_member():
+    discussion = db(db.discussions.discussion_id == request.vars.discussion_id).select().first()
+    db.membership.insert(discussion=discussion['id'], user_table=auth.user_id)
+    return "ok"
+
+def remove_member():
+    discussion = db(db.discussions.discussion_id == request.vars.discussion_id).select().first()
+    db(db.membership.discussion==discussion['id'], db.membership.user_table==auth.user_id).delete()
+    return "ok"
+
+def load_posts():
+    discussion = db(db.discussions.discussion_id == request.vars.discussion_id).select().first()
+    my_drafts_query = (db.posts.is_draft == True) & (db.posts.post_author == auth.user_id) & (db.posts.discussion_id == discussion.id)
+    all_completed_posts_query = (db.posts.discussion_id == discussion.id) & (db.posts.is_draft == False)
+    my_drafts = db(my_drafts_query)
+    all_completed_posts = db(all_completed_posts_query)
+    discussion_posts = my_drafts.select() | all_completed_posts.select()
+    return response.json(list(discussion_posts))
 
 def user():
     """

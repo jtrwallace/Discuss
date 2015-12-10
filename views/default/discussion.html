@@ -39,7 +39,7 @@
 <body>
 	<div id="wrap">
 		<div class="content-wrapper">
-			<div id="discussion-target" class="content-wrapper"></div>
+			<div id="discussion-target"></div>
 			<div id="discussion-forum-target"></div>
 			<div id="discussion-calendar-target"></div>
 			<div id="discussion-members-target"></div>
@@ -66,7 +66,7 @@
         {{pass}}
         </div>
 	</nav>
-	<main>
+	<main id="discussion-main">
 		<div class="banner-photo">
 			<img src="{% discussion['banner_photo_url'] %}" alt="Bicycle Commuter">
 			<div id="discussion-greeting" class="banner-content">
@@ -74,24 +74,67 @@
 				<div class="banner-text">{% discussion['discussion_description'] %}</div>
 			</div>
 		</div>
-		<div id="discussion-nav-container" class="flex-row space-around center-aligned">
-			<button class="{% discuss_button_class %}" id="discuss-button" on-click="discuss-button">Discuss</button>
-			<button class="{% calendar_button_class %}" id="calendar-button" on-click="calendar-button">Calendar</button>
-			<button class="{% members_button_class %}" id="members-button" on-click="members-button">Members</button>
+		<div id="discussion-nav-container">
+			<div id="join-or-post-container" class="{% join_or_post_container_class %}">
+				{{if auth.is_logged_in():}}
+					{% #if is_member %}
+						<button class="btn blue-button" id="post-button" on-click="new-post-button">New Post</button>
+						<button class="btn" id="leave-button" on-click="leave-button">Leave Discussion</button>
+					{% /if %}
+					{% #if is_not_member %}
+						<button class="btn blue-button" id="join-button" on-click="join-button">Join Discussion</button>
+					{% /if %}
+				{{pass}}
+			</div>
+			<div id="discussion-nav-options" class="flex-row space-around center-aligned">
+				<button class="{% discuss_button_class %}" id="discuss-button" on-click="discuss-button">Discuss</button>
+				<button class="{% calendar_button_class %}" id="calendar-button" on-click="calendar-button">Calendar</button>
+				<button class="{% members_button_class %}" id="members-button" on-click="members-button">Members</button>
+			</div>
 		</div>
 	</main>
 </script>
 
 <script id="discussion-forum-template" type="text/ractive">
-
+	<div id="forum-container" class="flex-column center-aligned">
+		<div id="forum-heading-container" class="flex-row center-aligned space-between">
+			<div id="forum-heading-topic" class="forum-heading topic">Topic</div>
+			<div id="forum-heading-replies" class="forum-heading replies">Replies</div>
+			<div id="forum-heading-views" class="forum-heading views">Views</div>
+			<div id="forum-heading-last-post" class="forum-heading last-post">Last Post</div>
+		</div>
+		{% #posts_list %}
+		<div id="forum-post" class="flex-row center-aligned single-forum-post">
+			<div id="forum-post-subject-author-container" class="flex-column topic">
+				<div id="forum-post-subject">{% post_title %}</div>
+				<div id="forum-post-author-and-date">by {% post_author %} on {% posting_time_pretty %}</div>
+			</div>
+			<div id="forum-post-replies" class="replies">{% post_replies %}</div>
+			<div id="forum-post-views" class="views">{% post_views %}</div>
+			<div id="forum-post-last-post-container" class="flex-column last-post">
+				<div id="forum-post-last-post-author">by {% last_reply_author %}</div>
+				<div id="forum-post-last-post-date">on {% last_reply_time %}</div>
+			</div>
+		</div>
+		{% /posts_list %}
+	</div>
+	{% #if number_of_posts === 0 %}
+        <div class="no_posts">
+            {{if auth.is_logged_in():}}
+            <p>No posts yet!<br>Click <b>New Post</b> above to be the first!</p>
+            {{else:}}
+            <p>No posts yet!<br><b>Log in</b> or create an account above to be the first!</p>
+            {{pass}}
+        </div>
+    {% /if %}
 </script>
 
 <script id="discussion-calendar-template" type="text/ractive">
-
+	<p>Testing calendar</p>
 </script>
 
 <script id="discussion-members-template" type="text/ractive">
-
+	<p>Testing members</p>
 </script>
 
 <script>
@@ -103,11 +146,13 @@
 			delimiters: ['{%', '%}'],
 			tripleDelimiters: ['{%%', '%%}'],
 			data: {
-				posts_list: [],
 				discussion: "",
 				discuss_button_class: "btn discussion-btn-active",
 				calendar_button_class: "btn discussion-btn",
-				members_button_class: "btn discussion-btn"
+				members_button_class: "btn discussion-btn",
+				join_or_post_container_class: "flex-row space-around center-aligned join",
+				is_member: false,
+				is_not_member: true
 			}
 		});
 		
@@ -118,10 +163,7 @@
 			tripleDelimiters: ['{%%', '%%}'],
 			data: {
 				posts_list: [],
-				discussion: "",
-				discuss_button_class: "btn discussion-btn-active",
-				calendar_button_class: "btn discussion-btn",
-				members_button_class: "btn discussion-btn"
+				number_of_posts: 0,
 			}
 		});
 		
@@ -131,11 +173,7 @@
 			delimiters: ['{%', '%}'],
 			tripleDelimiters: ['{%%', '%%}'],
 			data: {
-				posts_list: [],
-				discussion: "",
-				discuss_button_class: "btn discussion-btn-active",
-				calendar_button_class: "btn discussion-btn",
-				members_button_class: "btn discussion-btn"
+
 			}
 		});
 		
@@ -145,20 +183,43 @@
 			delimiters: ['{%', '%}'],
 			tripleDelimiters: ['{%%', '%%}'],
 			data: {
-				posts_list: [],
-				discussion: "",
-				discuss_button_class: "btn discussion-btn-active",
-				calendar_button_class: "btn discussion-btn",
-				members_button_class: "btn discussion-btn"
+
 			}
 		});
 
 		function load_posts() {
-			$.ajax("{{=URL('default', 'load_discussions')}}",
+			$.ajax("{{=URL('default', 'load_posts')}}",
 					{
+						data: {
+							discussion_id: "{{=discussion_id}}" //request.vars.discussion_id
+						},
 						method: 'POST',
 						success: function (data) {
-							sort_list_by_date(data, 'post_last_updated', set_DISCUSS_list);
+							if (data.length > 0 && typeof data !== 'undefined') {
+								var posts_list = DISCUSS.get('posts_list');
+								if (posts_list.length > 0) {
+									var new_list = posts_list;
+									var has_match = false;
+									for (var i = 0; i < data.length; i += 1) {
+										for (var j = 0; j < posts_list.length; j += 1) {
+											if (hasValue(posts_list[j], 'post_id', data[i]['post_id'])) {
+												has_match = true;
+												new_list[j] = data[i];
+											}
+											if (j == posts_list.length) {
+												if (has_match == false) {
+													new_list.push(data[i]);
+													has_match = false;
+												}
+											}
+										}
+									}
+									MAIN.set('number_of_posts', data.length);
+									sort_list_by_date(new_list, 'posting_time', set_DISCUSS_list);
+								} else {
+									MAIN.set('number_of_posts', data.length);
+									sort_list_by_date(data, 'posting_time', set_DISCUSS_list);
+								}
 						}
 					}
 			);
@@ -178,7 +239,15 @@
 						}
 					}
 			);
-
+			if("{{=is_member}}" == "false") {
+				MAIN.set('is_member', false);
+				MAIN.set('is_not_member', true);
+				MAIN.set('join_or_post_container_class', "flex-row space-between center-aligned join")
+			} else {
+				MAIN.set('is_member', true);
+				MAIN.set('is_not_member', false);
+				MAIN.set('join_or_post_container_class', "flex-row space-between center-aligned new-leave")
+			}
 		}
 
 		function load_calendar() {
@@ -189,30 +258,98 @@
 
 		}
 
-		function set_active_button(name) {
-			switch(name) {
-				case 'calendar': set_calendar_active(); break;
-                case 'members': set_members_active(); break;
-                default: set_discuss_active();
+		function hasValue(obj, key, value) {
+			return obj.hasOwnProperty(key) && obj[key] === value;
+		}
+
+		//Creates an empty post with a new UUID.
+		function create_draft_post_object() {
+			return {
+				active_draft_content: "",
+				active_draft_title: "",
+				post_author: parseInt("{{=auth.user_id}}"),
+				post_content: "",
+				post_title: "",
+				board_id: "{{=board_id}}",
+				post_id: generateUUID(),
+				posting_time: get_UTC_String(),
+				posting_time_pretty: get_pretty_time(),
+				is_draft: true
+			};
+		}
+
+		//Updates the time and draft status before becoming a real post and being sent to the server.
+		function prepare_saved_post_object(post) {
+			post['is_draft'] = false;
+			post['posting_time'] = get_UTC_String();
+			post['posting_time_pretty'] = get_pretty_time();
+			post['active_draft_title'] = "";
+			post['active_draft_content'] = "";
+			return post;
+		}
+
+		//http://stackoverflow.com/questions/7176908/how-to-get-index-of-object-by-its-property-in-javascript
+		function findWithAttr(array, attr, value) {
+			for(var i = 0; i < array.length; i += 1) {
+				if(array[i][attr] === value) {
+					return i;
+				}
 			}
+		}
+
+		//To retrieve the time in UTC string format
+		function get_UTC_String() {
+			var date = new Date();
+			return date.toUTCString();
+		}
+
+		//Makes the date more readable and in user's time zone.
+		function get_pretty_time() {
+			var date = new Date();
+			var full_date = date.toString();
+			var split_date = full_date.split(" ");
+			var split_time = split_date[4].split(":");
+			return split_date[1] + " " + split_date[2] + " " + split_time[0] + ":" + split_time[1];
+		}
+
+		//Save the active draft to the real title and content.
+		function copy_active(post) {
+			post['post_title'] = post['active_draft_title'];
+			post['post_content'] = post['active_draft_content'];
+			return post;
+		}
+
+		function copy_saved(post) {
+			post['active_draft_title'] = post['post_title'];
+			post['active_draft_content'] = post['post_content'];
+			return post;
 		}
 
 		function set_discuss_active() {
 			MAIN.set('discuss_button_class', "btn discussion-btn-active");
 			MAIN.set('calendar_button_class', "btn discussion-btn");
 			MAIN.set('members_button_class', "btn discussion-btn");
+			DISCUSS.resetTemplate('#discussion-forum-template');
+			CALENDAR.resetTemplate('');
+			MEMBERS.resetTemplate('');
 		}
 
-		function set_calendars_active() {
+		function set_calendar_active() {
 			MAIN.set('discuss_button_class', "btn discussion-btn");
 			MAIN.set('calendar_button_class', "btn discussion-btn-active");
 			MAIN.set('members_button_class', "btn discussion-btn");
+			DISCUSS.resetTemplate('');
+			CALENDAR.resetTemplate('#discussion-calendar-template');
+			MEMBERS.resetTemplate('');
 		}
 
 		function set_members_active() {
 			MAIN.set('discuss_button_class', "btn discussion-btn");
 			MAIN.set('calendar_button_class', "btn discussion-btn");
 			MAIN.set('members_button_class', "btn discussion-btn-active");
+			DISCUSS.resetTemplate('');
+			CALENDAR.resetTemplate('');
+			MEMBERS.resetTemplate('#discussion-members-template');
 		}
 
 		load_discussion();
@@ -235,7 +372,72 @@
 			DISCUSS.set('posts_list', list);
 		}
 
+		function become_member() {
+			$.ajax("{{=URL('default', 'become_member')}}",
+					{
+						data: {
+							discussion_id: "{{=discussion_id}}" //request.vars.discussion_id
+						},
+						method: 'POST',
+						success: function (data) {
+							MAIN.set('is_member', true);
+							MAIN.set('is_not_member', false);
+						}
+					}
+			);
+		}
 
+		function remove_member() {
+			$.ajax("{{=URL('default', 'remove_member')}}",
+					{
+						data: {
+							discussion_id: "{{=discussion_id}}" //request.vars.discussion_id
+						},
+						method: 'POST',
+						success: function (data) {
+							MAIN.set('is_member', false);
+							MAIN.set('is_not_member', true);
+						}
+					}
+			);
+		}
+
+		MAIN.on("discuss-button", function(e) {
+			set_discuss_active();
+		});
+
+		MAIN.on("calendar-button", function(e) {
+			set_calendar_active();
+		});
+
+		MAIN.on("members-button", function(e) {
+			set_members_active();
+		});
+
+		MAIN.on("join-button", function(e) {
+			become_member();
+		});
+
+		MAIN.on("leave-button", function(e) {
+			remove_member();
+		});
+
+		MAIN.on("new-post-button", function(e) {
+
+		});
+
+		// http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+		function generateUUID(){
+			var d = new Date().getTime();
+			if(window.performance && typeof window.performance.now === "function"){
+				d += performance.now(); //use high-precision timer if available
+			}
+			return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+				var r = (d + Math.random()*16)%16 | 0;
+				d = Math.floor(d/16);
+				return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+			});
+		}
 
 	});
 </script>

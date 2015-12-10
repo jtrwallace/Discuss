@@ -395,28 +395,92 @@ h1, h2, h3, h4, h5, h6 {
 /* line 349, ../sass/_main.scss */
 #discussion-nav-container {
   position: relative;
-  top: -50px;
+  top: -120px;
   width: 80%;
   margin: auto;
+  height: 200px;
+}
+
+/* line 357, ../sass/_main.scss */
+#discussion-nav-options {
+  width: 100%;
   background-color: #424242;
   height: 100px;
 }
 
-/* line 358, ../sass/_main.scss */
+/* line 363, ../sass/_main.scss */
+#join-or-post-container {
+  height: 70px;
+  width: 100%;
+}
+
+/* line 368, ../sass/_main.scss */
+.new-leave {
+  width: 100%;
+}
+
+/* line 372, ../sass/_main.scss */
+.join {
+  width: 100%;
+}
+
+/* line 376, ../sass/_main.scss */
+#join-button {
+  width: 20%;
+  height: 100%;
+}
+
+/* line 381, ../sass/_main.scss */
+#join-button:hover {
+  background-color: #FF9400;
+  color: #424242;
+}
+
+/* line 386, ../sass/_main.scss */
+#post-button {
+  height: 100%;
+  width: 20%;
+  white-space: pre-line;
+  padding: 0px;
+  font-size: 17pt;
+  margin: 0;
+}
+
+/* line 395, ../sass/_main.scss */
+#post-button:hover {
+  background-color: #FF9500;
+}
+
+/* line 399, ../sass/_main.scss */
+#leave-button {
+  height: 100%;
+  width: 10%;
+  background-color: #FF0000;
+  white-space: pre-line;
+  padding: 0px;
+  font-size: 12pt;
+}
+
+/* line 408, ../sass/_main.scss */
+#leave-button:hover {
+  color: #424242;
+}
+
+/* line 412, ../sass/_main.scss */
 .discussion-btn {
   background-color: #FF9400;
   width: 25%;
   font-size: 20pt;
 }
 
-/* line 364, ../sass/_main.scss */
+/* line 418, ../sass/_main.scss */
 .discussion-btn:hover {
   background-color: #0097FF;
   color: white;
   font-size: 22pt;
 }
 
-/* line 370, ../sass/_main.scss */
+/* line 424, ../sass/_main.scss */
 .discussion-btn-active {
   background-color: #0097FF;
   color: white;
@@ -424,36 +488,134 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 22pt;
 }
 
-/* line 377, ../sass/_main.scss */
+/* line 431, ../sass/_main.scss */
 .discussion-btn-active:hover {
   background-color: #0097FF;
   color: white;
   font-size: 22pt;
 }
 
-/* line 383, ../sass/_main.scss */
+/* line 437, ../sass/_main.scss */
 .blue-button {
   background-color: #0097FF;
   color: white;
   margin: auto;
 }
 
-/* line 389, ../sass/_main.scss */
+/* line 443, ../sass/_main.scss */
 .blue-button:hover {
   color: #424242;
 }
 
-/* line 393, ../sass/_main.scss */
+/* line 447, ../sass/_main.scss */
 #submit-button {
   margin-top: 10px;
 }
 
-/* line 397, ../sass/_main.scss */
+/* line 451, ../sass/_main.scss */
 #register-form {
   padding-top: 0px;
 }
 
-/* line 401, ../sass/_main.scss */
+/* line 455, ../sass/_main.scss */
 #new-discussion-greeting h1 {
   margin-top: 10px;
+}
+
+/* line 459, ../sass/_main.scss */
+#discussion-main {
+  margin-bottom: -150px;
+}
+
+/* line 463, ../sass/_main.scss */
+#forum-heading-container {
+  width: 80%;
+  height: 50px;
+  background-color: #E3F1FF;
+  padding: 0px 15px 0px 15px;
+  border-top-style: solid;
+  border-top-width: 7px;
+  border-top-color: #0097FF;
+}
+
+/* line 473, ../sass/_main.scss */
+.forum-heading {
+  font-size: 15pt;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* line 478, ../sass/_main.scss */
+.topic {
+  width: 60%;
+}
+
+/* line 482, ../sass/_main.scss */
+.replies {
+  width: 10%;
+  text-align: center;
+}
+
+/* line 487, ../sass/_main.scss */
+.views {
+  width: 10%;
+  text-align: center;
+}
+
+/* line 492, ../sass/_main.scss */
+.last-post {
+  width: 20%;
+}
+
+/* line 496, ../sass/_main.scss */
+#forum-post {
+  width: 80%;
+  height: 70px;
+  padding: 0px 15px 0px 15px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #424242;
+  font-family: 'Lato', sans-serif;
+  font-size: 15pt;
+}
+
+/* line 507, ../sass/_main.scss */
+#forum-post-author-and-date {
+  font-size: 9pt;
+  font-style: italic;
+}
+
+/* line 512, ../sass/_main.scss */
+#forum-post-last-post-author {
+  font-size: 13pt;
+}
+
+/* line 516, ../sass/_main.scss */
+#forum-post-last-post-date {
+  font-size: 9pt;
+  font-style: italic;
+}
+
+/* line 521, ../sass/_main.scss */
+.single-forum-post:nth-child(even) {
+  background-color: #FFF1E3;
+}
+
+/* line 525, ../sass/_main.scss */
+.single-forum-post:nth-child(odd) {
+  background-color: #E3E3E3;
+}
+
+/* line 529, ../sass/_main.scss */
+.no_posts {
+  width: 80%;
+  font-family: 'Lato', sans-serif;
+  font-size: 16pt;
+  margin: auto;
+  text-align: center;
+  background-color: #FFF1E3;
+  height: 80px;
+  padding-top: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #424242;
 }
