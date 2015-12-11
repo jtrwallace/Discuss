@@ -110,7 +110,11 @@ sg9
 I00
 sg10
 g11
+<<<<<<< .merge_file_w0jTDg
 ssS'email'
+=======
+ssS'id'
+>>>>>>> .merge_file_aXNZQl
 p35
 (dp36
 g4
@@ -118,17 +122,31 @@ I512
 sg5
 I00
 sg6
+<<<<<<< .merge_file_w0jTDg
 I4
 sg7
 S'CHAR(512)'
+=======
+I1
+sg7
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+>>>>>>> .merge_file_aXNZQl
 p37
 sg9
 I00
 sg10
+<<<<<<< .merge_file_w0jTDg
 g11
 ssS'reset_password_key'
 p38
 (dp39
+=======
+S'id'
+p38
+ssS'reset_password_key'
+p39
+(dp40
+>>>>>>> .merge_file_aXNZQl
 g4
 I512
 sg5
@@ -137,14 +155,23 @@ sg6
 I7
 sg7
 S'CHAR(512)'
+<<<<<<< .merge_file_w0jTDg
 p40
+=======
+p41
+>>>>>>> .merge_file_aXNZQl
 sg9
 I00
 sg10
 g11
 ssS'password'
+<<<<<<< .merge_file_w0jTDg
 p41
 (dp42
+=======
+p42
+(dp43
+>>>>>>> .merge_file_aXNZQl
 g4
 I512
 sg5
@@ -153,7 +180,11 @@ sg6
 I5
 sg7
 S'CHAR(512)'
+<<<<<<< .merge_file_w0jTDg
 p43
+=======
+p44
+>>>>>>> .merge_file_aXNZQl
 sg9
 I00
 sg10
@@ -161,7 +192,13 @@ S'password'
 p44
 ssS'registration_key'
 p45
+<<<<<<< .merge_file_w0jTDg
 (dp46
+=======
+ssS'registration_key'
+p46
+(dp47
+>>>>>>> .merge_file_aXNZQl
 g4
 I512
 sg5
@@ -170,19 +207,30 @@ sg6
 I6
 sg7
 S'CHAR(512)'
+<<<<<<< .merge_file_w0jTDg
 p47
+=======
+p48
+>>>>>>> .merge_file_aXNZQl
 sg9
 I00
 sg10
 g11
+<<<<<<< .merge_file_w0jTDg
 ssS'id'
 p48
 (dp49
+=======
+ssS'email'
+p49
+(dp50
+>>>>>>> .merge_file_aXNZQl
 g4
 I512
 sg5
 I00
 sg6
+<<<<<<< .merge_file_w0jTDg
 I1
 sg7
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
@@ -192,4 +240,14 @@ I00
 sg10
 S'id'
 p51
+=======
+I4
+sg7
+S'CHAR(512)'
+p51
+sg9
+I00
+sg10
+g11
+>>>>>>> .merge_file_aXNZQl
 ss.

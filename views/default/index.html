@@ -45,6 +45,7 @@
     <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
     <script src="{{=URL('static','js/web2py-bootstrap3.js')}}"></script>
     <script src="{{=URL('static', 'js/ractive.min.js')}}"></script>
+    <script src="{{=URL('static', 'js/ractive-events-keys.js')}}"></script>
 </body>
 
 <script id="index-template" type="text/ractive">
@@ -75,7 +76,7 @@
 		</div>
 		<div id="search-new-container" class="flex-row space-around center-aligned">
 			<div id="search-container" class="flex-row space-between center-aligned">
-				<input type="text" class="search-input" id="search-input-index" name="search-input" value="{% search_input %}" placeholder=" All Discussions" maxlength="30"/>
+				<input type="text" class="search-input" id="search-input-index" name="search-input" value="{% search_input %}" placeholder=" All Discussions" maxlength="30" on-enter="enter-search-field"/>
 				<button class="btn" id="search-button" on-click="search-button">Search</button>
 			</div>
 			{{if auth.is_logged_in():}}
@@ -146,6 +147,24 @@
 		}
 
 		BODY.on("search-button", function(e) {
+			if(BODY.get('search_input') === "") {
+				load_discussions();
+			} else {
+				$.ajax("{{=URL('default', 'search_discussions')}}",
+					{
+						data: {
+							search_input: BODY.get('search_input') //request.vars.search_input
+						},
+						method: 'POST',
+						success: function (data) {
+							set_BODY_list(data);
+						}
+					}
+			);
+			}
+		});
+
+		BODY.on("enter-search-field", function(e) {
 			if(BODY.get('search_input') === "") {
 				load_discussions();
 			} else {
