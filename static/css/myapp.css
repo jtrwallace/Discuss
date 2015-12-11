@@ -830,3 +830,8 @@ textarea.post_draft_content.form-control {
 .reply-div {
   margin: 15px;
 }
+
+/* line 726, ../sass/_main.scss */
+#back-button {
+  margin-left: 39%;
+}

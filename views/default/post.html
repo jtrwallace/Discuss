@@ -115,6 +115,7 @@
 		{% /if %}
 		<button class="btn blue-button" id="post-reply-button" on-click="new-reply-button" data-replyid="{% reply_id %}">Post Reply</button>
 		</div>
+		<a href="{% discussion_url + "/" + discussion['discussion_id'] %}" class="btn" id="back-button">Back to Discussion</a>
 </script>
 
 <script>
@@ -131,7 +132,8 @@
 				replies_list: [],
 				is_member: false,
 				is_not_member: true,
-				number_of_replies: 0
+				number_of_replies: 0,
+                discussion_url: "{{=URL('default', 'discussion')}}"
 			}
 		});
 
